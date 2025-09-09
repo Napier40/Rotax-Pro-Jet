@@ -1,0 +1,13 @@
+[Unit]
+Description=Rotax Pro Jet - Kart Jetting Calculator
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/rotax-pro-jet
+Environment="PATH=/var/www/rotax-pro-jet/venv/bin"
+ExecStart=/var/www/rotax-pro-jet/venv/bin/gunicorn --workers 3 --bind unix:rotax-pro-jet.sock -m 007 app:app
+
+[Install]
+WantedBy=multi-user.target

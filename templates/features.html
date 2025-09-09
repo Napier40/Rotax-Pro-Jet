@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+
+{% block title %}Features - Rotax Pro Jet{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="display-5 fw-bold mb-3">Powerful Features for Rotax Kart Racers</h1>
+                <p class="lead mb-4">Rotax Pro Jet provides everything you need to optimize your carburetor jetting for maximum performance in any weather condition.</p>
+                <a href="{{ url_for('calculator') }}" class="btn btn-primary btn-lg">Try Calculator</a>
+            </div>
+            <div class="col-lg-6">
+                <img src="{{ url_for('static', filename='images/features-hero.jpg') }}" alt="Rotax Pro Jet Features" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Features -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">Core Features</h2>
+            <p class="lead text-muted">Precision tools for optimal carburetor jetting</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-3">
+                            <i class="fas fa-calculator fa-2x"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Advanced Jetting Calculator</h3>
+                        <p class="text-muted mb-3">Our calculator uses the mathematical model from Bowmain Consulting to provide precise jetting recommendations based on temperature, pressure, humidity, and altitude.</p>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Main jet size calculation</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Needle position recommendation</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Float height adjustment</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Air density calculation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-3">
+                            <i class="fas fa-cloud fa-2x"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Real-time Weather Data</h3>
+                        <p class="text-muted mb-3">Get accurate weather information for your exact location to ensure precise jetting calculations without needing external weather instruments.</p>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Automatic location detection</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Track search functionality</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Current temperature, pressure, and humidity</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Elevation data</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-3">
+                            <i class="fas fa-save fa-2x"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Save & Compare Settings</h3>
+                        <p class="text-muted mb-3">Store your jetting configurations and track performance across different conditions to build your personal knowledge base.</p>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Unlimited saved settings (Pro & Team plans)</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Add notes to each configuration</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Quick loading of previous settings</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Compare different configurations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-3">
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Team Collaboration</h3>
+                        <p class="text-muted mb-3">Share settings and recommendations with your team members for collaborative tuning and consistent performance across multiple karts.</p>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Up to 5 team members (Team plan)</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Shared settings library</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Team admin controls</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Activity tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Additional Features -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">Additional Features</h2>
+            <p class="lead text-muted">More tools to enhance your racing experience</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <h3 class="h5 mb-0">Historical Data</h3>
+                        </div>
+                        <p class="text-muted mb-0">Access past weather conditions and jetting recommendations for your favorite tracks to prepare for upcoming races.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <h3 class="h5 mb-0">Weather Alerts</h3>
+                        </div>
+                        <p class="text-muted mb-0">Get notified when conditions change significantly enough to affect your jetting, ensuring optimal performance throughout the race day.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3 class="h5 mb-0">Track Database</h3>
+                        </div>
+                        <p class="text-muted mb-0">Search from our database of karting tracks worldwide to quickly get location-specific weather data and elevation information.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h3 class="h5 mb-0">Custom Engine Profiles</h3>
+                        </div>
+                        <p class="text-muted mb-0">Create and save custom engine profiles with specific jetting characteristics for different engine builds or modifications.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h3 class="h5 mb-0">Mobile Friendly</h3>
+                        </div>
+                        <p class="text-muted mb-0">Access Rotax Pro Jet from any device with a responsive design that works perfectly on smartphones, tablets, and desktops.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3 class="h5 mb-0">API Access</h3>
+                        </div>
+                        <p class="text-muted mb-0">Integrate Rotax Pro Jet's jetting calculations into your own applications or team management software (Team plan only).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mathematical Model -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="display-6 fw-bold mb-3">Scientific Approach</h2>
+                <p class="mb-3">Our jetting calculator is based on the mathematical model developed by Bowmain Consulting for Rotax carburetor jetting. The core formula for jet size calculation is:</p>
+                <div class="bg-light p-3 rounded mb-3">
+                    <code>j₂ = j₁ × (ρ₂/ρ₁)^(1/4)</code>
+                </div>
+                <p class="mb-3">Where:</p>
+                <ul class="mb-4">
+                    <li>j₂ is the new jet size</li>
+                    <li>j₁ is the reference jet size</li>
+                    <li>ρ₂ is the current air density</li>
+                    <li>ρ₁ is the reference air density</li>
+                </ul>
+                <p class="mb-0">Air density is calculated using temperature, pressure, and humidity data to ensure the most accurate recommendations possible.</p>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="h4 mb-3">Air Density Formula</h3>
+                        <div class="bg-light p-3 rounded mb-3">
+                            <code>ρ = (P / (Rd × T)) × (1 - 0.378 × (Pw/P))</code>
+                        </div>
+                        <p class="mb-3">Where:</p>
+                        <ul class="mb-0">
+                            <li>ρ = air density (kg/m³)</li>
+                            <li>P = atmospheric pressure (Pascals)</li>
+                            <li>Pw = water vapor pressure (Pascals)</li>
+                            <li>Rd = gas constant for dry air (287.05 J/(kg*K))</li>
+                            <li>T = temperature (Kelvin)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Engine Support -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">Supported Engines</h2>
+            <p class="lead text-muted">Optimized for all Rotax MAX kart engines</p>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <img src="{{ url_for('static', filename='images/senior-max.jpg') }}" alt="Senior MAX EVO" class="img-fluid rounded mb-3" style="max-height: 150px;">
+                        <h3 class="h4 mb-2">Senior MAX EVO</h3>
+                        <p class="text-muted mb-3">The flagship Rotax engine for senior drivers, producing up to 30hp.</p>
+                        <ul class="list-unstyled text-start mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Default jet: 130</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Jet range: 124-136</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Needle options: K27, K98</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <img src="{{ url_for('static', filename='images/junior-max.jpg') }}" alt="Junior MAX EVO" class="img-fluid rounded mb-3" style="max-height: 150px;">
+                        <h3 class="h4 mb-2">Junior MAX EVO</h3>
+                        <p class="text-muted mb-3">Restricted version for junior drivers, producing up to 23hp.</p>
+                        <ul class="list-unstyled text-start mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Default jet: 130</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Jet range: 124-136</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Needle options: K27, K98</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <img src="{{ url_for('static', filename='images/mini-max.jpg') }}" alt="Mini MAX" class="img-fluid rounded mb-3" style="max-height: 150px;">
+                        <h3 class="h4 mb-2">Mini MAX</h3>
+                        <p class="text-muted mb-3">Smaller version for younger drivers, producing up to 15hp.</p>
+                        <ul class="list-unstyled text-start mb-0">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Default jet: 130</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Jet range: 124-136</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Needle options: K27, K98</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h2 class="display-5 fw-bold mb-3">Ready to optimize your kart's performance?</h2>
+                <p class="lead mb-0">Join thousands of racers who trust Rotax Pro Jet for precise jetting recommendations.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('register') }}" class="btn btn-light btn-lg">Start Free Trial</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .feature-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+    }
+    
+    .feature-icon-sm {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+</style>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

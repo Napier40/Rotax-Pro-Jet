@@ -1,0 +1,388 @@
+{% extends 'base.html' %}
+
+{% block title %}Rotax Pro Jet - Precision Jetting for Rotax Kart Racers{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="display-4 fw-bold mb-3">Precision Jetting for Rotax Kart Racers</h1>
+                <p class="lead mb-4">Optimize your carburetor settings based on real-time weather conditions. Get the perfect jetting for maximum performance in any environment.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{{ url_for('calculator') }}" class="btn btn-primary btn-lg">Try Calculator</a>
+                    <a href="{{ url_for('features') }}" class="btn btn-outline-primary btn-lg">Learn More</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="{{ url_for('static', filename='images/hero-image.jpg') }}" alt="Rotax Kart Racing" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">How It Works</h2>
+            <p class="lead text-muted">Get optimal jetting recommendations in three simple steps</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-3">
+                            <i class="fas fa-map-marker-alt fa-2x"></i>
+                        </div>
+                        <h3 class="h4 mb-3">1. Enter Your Location</h3>
+                        <p class="text-muted mb-0">Use your current location or search for your track to automatically get weather data.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-3">
+                            <i class="fas fa-cog fa-2x"></i>
+                        </div>
+                        <h3 class="h4 mb-3">2. Select Engine Type</h3>
+                        <p class="text-muted mb-0">Choose your Rotax engine variant and enter your reference jet size.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-3">
+                            <i class="fas fa-calculator fa-2x"></i>
+                        </div>
+                        <h3 class="h4 mb-3">3. Get Recommendations</h3>
+                        <p class="text-muted mb-0">Receive precise jetting recommendations based on scientific calculations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('calculator') }}" class="btn btn-primary">Try It Now</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">Features</h2>
+            <p class="lead text-muted">Everything you need to optimize your kart's performance</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <h3 class="h5 mb-0">Real-time Weather Data</h3>
+                        </div>
+                        <p class="text-muted mb-0">Get accurate weather information for your exact location to ensure precise jetting calculations.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <h3 class="h5 mb-0">Advanced Jetting Algorithm</h3>
+                        </div>
+                        <p class="text-muted mb-0">Our calculations are based on the mathematical models from Bowmain Consulting's research.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-save"></i>
+                            </div>
+                            <h3 class="h5 mb-0">Save & Compare Settings</h3>
+                        </div>
+                        <p class="text-muted mb-0">Store your jetting configurations and track performance across different conditions.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <h3 class="h5 mb-0">Historical Data</h3>
+                        </div>
+                        <p class="text-muted mb-0">Access past weather conditions and jetting recommendations for your favorite tracks.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <h3 class="h5 mb-0">Weather Alerts</h3>
+                        </div>
+                        <p class="text-muted mb-0">Get notified when conditions change significantly enough to affect your jetting.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon-sm bg-primary bg-gradient text-white me-3">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="h5 mb-0">Team Sharing</h3>
+                        </div>
+                        <p class="text-muted mb-0">Share settings and recommendations with your team members for collaborative tuning.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('features') }}" class="btn btn-outline-primary">View All Features</a>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">Pricing Plans</h2>
+            <p class="lead text-muted">Choose the plan that fits your racing needs</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 pt-4 pb-0">
+                        <h3 class="text-center mb-0">Basic</h3>
+                        <div class="price text-center my-3">
+                            <span class="currency">$</span>
+                            <span class="amount display-5 fw-bold">4.99</span>
+                            <span class="period text-muted">/month</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Basic jetting calculations</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Manual weather input</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Limited history (5 saves)</li>
+                            <li class="mb-2 text-muted"><i class="fas fa-times text-danger me-2"></i> Automatic weather data</li>
+                            <li class="mb-2 text-muted"><i class="fas fa-times text-danger me-2"></i> Track-specific recommendations</li>
+                            <li class="mb-2 text-muted"><i class="fas fa-times text-danger me-2"></i> Team sharing</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4">
+                        <a href="#" class="btn btn-outline-primary d-block">Choose Basic</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow position-relative">
+                    <div class="position-absolute top-0 start-50 translate-middle">
+                        <span class="badge bg-primary px-3 py-2 rounded-pill">Most Popular</span>
+                    </div>
+                    <div class="card-header bg-white border-0 pt-4 pb-0">
+                        <h3 class="text-center mb-0">Pro</h3>
+                        <div class="price text-center my-3">
+                            <span class="currency">$</span>
+                            <span class="amount display-5 fw-bold">9.99</span>
+                            <span class="period text-muted">/month</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Advanced jetting calculations</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Automatic weather data</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Unlimited history</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Track-specific recommendations</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Email support</li>
+                            <li class="mb-2 text-muted"><i class="fas fa-times text-danger me-2"></i> Team sharing</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4">
+                        <a href="#" class="btn btn-primary d-block">Choose Pro</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 pt-4 pb-0">
+                        <h3 class="text-center mb-0">Team</h3>
+                        <div class="price text-center my-3">
+                            <span class="currency">$</span>
+                            <span class="amount display-5 fw-bold">24.99</span>
+                            <span class="period text-muted">/month</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> All Pro features</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Up to 5 team members</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Team data sharing</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Priority support</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Custom engine profiles</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> API access</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4">
+                        <a href="#" class="btn btn-outline-primary d-block">Choose Team</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <p class="text-muted">All plans include a 14-day free trial. No credit card required.</p>
+            <a href="{{ url_for('pricing') }}" class="btn btn-link">View Full Pricing Details</a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold">What Racers Say</h2>
+            <p class="lead text-muted">Trusted by kart racers around the world</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ url_for('static', filename='images/testimonial-1.jpg') }}" alt="Michael Johnson" class="rounded-circle me-3" width="60" height="60">
+                                <div>
+                                    <h5 class="mb-0">Michael Johnson</h5>
+                                    <p class="text-muted mb-0">Senior MAX Racer</p>
+                                </div>
+                            </div>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="mb-0">"This app has completely changed how I approach race day preparation. The jetting recommendations are spot-on every time."</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ url_for('static', filename='images/testimonial-2.jpg') }}" alt="Sarah Williams" class="rounded-circle me-3" width="60" height="60">
+                                <div>
+                                    <h5 class="mb-0">Sarah Williams</h5>
+                                    <p class="text-muted mb-0">Kart Team Manager</p>
+                                </div>
+                            </div>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="mb-0">"As a team manager, the Team plan has been invaluable. We can share settings across all our drivers and ensure consistent performance."</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ url_for('static', filename='images/testimonial-3.jpg') }}" alt="David Chen" class="rounded-circle me-3" width="60" height="60">
+                                <div>
+                                    <h5 class="mb-0">David Chen</h5>
+                                    <p class="text-muted mb-0">Junior MAX Racer</p>
+                                </div>
+                            </div>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <p class="mb-0">"The automatic weather data feature saves me so much time. I just show up at the track and get perfect jetting recommendations instantly."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h2 class="display-5 fw-bold mb-3">Ready to optimize your kart's performance?</h2>
+                <p class="lead mb-0">Join thousands of racers who trust Rotax Pro Jet for precise jetting recommendations.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('register') }}" class="btn btn-light btn-lg">Start Free Trial</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .feature-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+    }
+    
+    .feature-icon-sm {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    
+    .price .currency {
+        font-size: 1.5rem;
+        position: relative;
+        top: -1rem;
+    }
+    
+    .price .period {
+        font-size: 1rem;
+    }
+</style>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

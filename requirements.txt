@@ -1,0 +1,46 @@
+# Flask and extensions
+Flask==2.3.3
+Flask-SQLAlchemy==3.1.1
+Flask-Login==0.6.2
+Flask-Migrate==4.0.5
+Flask-WTF==1.2.1
+Flask-Mail==0.9.1
+Flask-Cors==4.0.0
+
+# Database
+SQLAlchemy==2.0.21
+alembic==1.12.0
+
+# Security
+Werkzeug==2.3.7
+itsdangerous==2.1.2
+bcrypt==4.0.1
+PyJWT==2.8.0
+
+# Environment and configuration
+python-dotenv==1.0.0
+environs==9.5.0
+
+# HTTP and API
+requests==2.31.0
+urllib3==2.0.5
+
+# Payment processing
+stripe==6.5.0
+
+# Utilities
+Pillow==10.0.1
+email-validator==2.0.0
+python-dateutil==2.8.2
+pytz==2023.3.post1
+Markdown==3.4.4
+
+# Development and testing
+pytest==7.4.2
+pytest-flask==1.2.0
+coverage==7.3.2
+black==23.9.1
+flake8==6.1.0
+
+# Production
+gunicorn==21.2.0

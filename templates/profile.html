@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile - Rotax Pro Jet{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 mb-4 mb-md-0">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <div class="avatar-circle mb-3">
+                                <span class="avatar-initials">{{ current_user.name[0] | upper }}</span>
+                            </div>
+                            <h5 class="mb-0">{{ current_user.name }}</h5>
+                            <p class="text-muted">{{ current_user.email }}</p>
+                        </div>
+                        
+                        <div class="list-group list-group-flush">
+                            <a href="#profile-info" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                                <i class="fas fa-user me-2"></i>Profile Information
+                            </a>
+                            <a href="#subscription" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                                <i class="fas fa-credit-card me-2"></i>Subscription
+                            </a>
+                            <a href="#security" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                                <i class="fas fa-lock me-2"></i>Security
+                            </a>
+                            <a href="#notifications" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                                <i class="fas fa-bell me-2"></i>Notifications
+                            </a>
+                            <a href="{{ url_for('settings') }}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-save me-2"></i>Saved Settings
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <!-- Profile Information -->
+                    <div class="tab-pane fade show active" id="profile-info">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Profile Information</h5>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="name" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="name" value="{{ current_user.name }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" value="{{ current_user.email }}" readonly>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="bio" class="form-label">Bio</label>
+                                        <textarea class="form-control" id="bio" rows="3" placeholder="Tell us about yourself..."></textarea>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="country" class="form-label">Country</label>
+                                            <select class="form-select" id="country">
+                                                <option selected>Select country</option>
+                                                <option value="US">United States</option>
+                                                <option value="CA">Canada</option>
+                                                <option value="UK">United Kingdom</option>
+                                                <option value="AU">Australia</option>
+                                                <option value="DE">Germany</option>
+                                                <option value="FR">France</option>
+                                                <option value="IT">Italy</option>
+                                                <option value="ES">Spain</option>
+                                                <option value="NL">Netherlands</option>
+                                                <option value="BE">Belgium</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="timezone" class="form-label">Timezone</label>
+                                            <select class="form-select" id="timezone">
+                                                <option selected>Select timezone</option>
+                                                <option value="UTC-8">Pacific Time (UTC-8)</option>
+                                                <option value="UTC-7">Mountain Time (UTC-7)</option>
+                                                <option value="UTC-6">Central Time (UTC-6)</option>
+                                                <option value="UTC-5">Eastern Time (UTC-5)</option>
+                                                <option value="UTC+0">GMT (UTC+0)</option>
+                                                <option value="UTC+1">Central European Time (UTC+1)</option>
+                                                <option value="UTC+2">Eastern European Time (UTC+2)</option>
+                                                <option value="UTC+8">China Standard Time (UTC+8)</option>
+                                                <option value="UTC+9">Japan Standard Time (UTC+9)</option>
+                                                <option value="UTC+10">Australian Eastern Time (UTC+10)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Subscription -->
+                    <div class="tab-pane fade" id="subscription">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Subscription</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="current-plan mb-4">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-1">Current Plan</h6>
+                                            <p class="mb-0">
+                                                <span class="badge bg-primary">{{ current_user.subscription_plan | capitalize }}</span>
+                                                {% if current_user.subscription_end_date %}
+                                                    <span class="text-muted ms-2">Renews on {{ current_user.subscription_end_date.strftime('%B %d, %Y') }}</span>
+                                                {% else %}
+                                                    <span class="text-muted ms-2">Free Trial</span>
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            {% if current_user.subscription_plan == 'free' %}
+                                                <a href="{{ url_for('pricing') }}" class="btn btn-primary">Upgrade</a>
+                                            {% else %}
+                                                <button class="btn btn-outline-danger">Cancel Subscription</button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-methods mb-4">
+                                    <h6 class="mb-3">Payment Methods</h6>
+                                    <div class="card mb-2">
+                                        <div class="card-body py-2">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fab fa-cc-visa fa-2x text-primary me-3"></i>
+                                                    <div>
+                                                        <p class="mb-0">Visa ending in 1234</p>
+                                                        <small class="text-muted">Expires 12/2025</small>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <span class="badge bg-success">Default</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-plus me-1"></i>Add Payment Method
+                                    </button>
+                                </div>
+                                
+                                <div class="billing-history">
+                                    <h6 class="mb-3">Billing History</h6>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Amount</th>
+                                                    <th>Description</th>
+                                                    <th>Status</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Aug 1, 2025</td>
+                                                    <td>$9.99</td>
+                                                    <td>Pro Plan - Monthly</td>
+                                                    <td><span class="badge bg-success">Paid</span></td>
+                                                    <td><a href="#" class="btn btn-sm btn-outline-secondary">Receipt</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jul 1, 2025</td>
+                                                    <td>$9.99</td>
+                                                    <td>Pro Plan - Monthly</td>
+                                                    <td><span class="badge bg-success">Paid</span></td>
+                                                    <td><a href="#" class="btn btn-sm btn-outline-secondary">Receipt</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jun 1, 2025</td>
+                                                    <td>$9.99</td>
+                                                    <td>Pro Plan - Monthly</td>
+                                                    <td><span class="badge bg-success">Paid</span></td>
+                                                    <td><a href="#" class="btn btn-sm btn-outline-secondary">Receipt</a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Security -->
+                    <div class="tab-pane fade" id="security">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Security</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="mb-3">Change Password</h6>
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="current_password" class="form-label">Current Password</label>
+                                        <input type="password" class="form-control" id="current_password" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="new_password" class="form-label">New Password</label>
+                                        <input type="password" class="form-control" id="new_password" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="confirm_new_password" class="form-label">Confirm New Password</label>
+                                        <input type="password" class="form-control" id="confirm_new_password" required>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary">Update Password</button>
+                                    </div>
+                                </form>
+                                
+                                <hr class="my-4">
+                                
+                                <h6 class="mb-3">Two-Factor Authentication</h6>
+                                <p class="text-muted">Add an extra layer of security to your account by enabling two-factor authentication.</p>
+                                <button class="btn btn-outline-primary">Enable 2FA</button>
+                                
+                                <hr class="my-4">
+                                
+                                <h6 class="mb-3">Sessions</h6>
+                                <p class="text-muted">These are the devices that are currently logged into your account.</p>
+                                <div class="list-group mb-3">
+                                    <div class="list-group-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Chrome on Windows</h6>
+                                                <small class="text-muted">Current session</small>
+                                            </div>
+                                            <span class="badge bg-success">Active Now</span>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Safari on iPhone</h6>
+                                                <small class="text-muted">Last active: 2 days ago</small>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-danger">Logout</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-danger">Logout of All Devices</button>
+                                
+                                <hr class="my-4">
+                                
+                                <h6 class="mb-3 text-danger">Danger Zone</h6>
+                                <p class="text-muted">Once you delete your account, there is no going back. Please be certain.</p>
+                                <button class="btn btn-danger">Delete Account</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notifications -->
+                    <div class="tab-pane fade" id="notifications">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Notifications</h5>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <h6 class="mb-3">Email Notifications</h6>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="notify_weather" checked>
+                                        <label class="form-check-label" for="notify_weather">Weather alerts for saved locations</label>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="notify_updates" checked>
+                                        <label class="form-check-label" for="notify_updates">Product updates and new features</label>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="notify_tips">
+                                        <label class="form-check-label" for="notify_tips">Jetting tips and tutorials</label>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="notify_marketing">
+                                        <label class="form-check-label" for="notify_marketing">Marketing and promotional emails</label>
+                                    </div>
+                                    
+                                    <h6 class="mb-3 mt-4">Notification Frequency</h6>
+                                    <div class="mb-3">
+                                        <select class="form-select" id="notification_frequency">
+                                            <option value="immediately">Immediately</option>
+                                            <option value="daily" selected>Daily digest</option>
+                                            <option value="weekly">Weekly digest</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary">Save Preferences</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .avatar-circle {
+        width: 80px;
+        height: 80px;
+        background-color: var(--bs-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
+    .avatar-initials {
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

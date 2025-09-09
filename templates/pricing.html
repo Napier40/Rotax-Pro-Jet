@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+
+{% block title %}Pricing - Rotax Pro Jet{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold">Pricing Plans</h1>
+            <p class="lead text-muted">Choose the plan that fits your racing needs</p>
+        </div>
+        
+        <!-- Pricing Toggle -->
+        <div class="d-flex justify-content-center mb-5">
+            <div class="form-check form-check-inline form-switch">
+                <input class="form-check-input" type="checkbox" id="billingToggle">
+                <label class="form-check-label" for="billingToggle">
+                    <span class="billing-monthly">Monthly</span>
+                    <span class="mx-2">/</span>
+                    <span class="billing-annual">Annual <span class="badge bg-success">Save 20%</span></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            <!-- Basic Plan -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 pt-4 pb-0">
+                        <h3 class="text-center mb-0">Basic</h3>
+                        <div class="price text-center my-3">
+                            <span class="currency">$</span>
+                            <span class="amount display-5 fw-bold" data-monthly="4.99" data-annual="3.99">4.99</span>
+                            <span class="period text-muted" data-monthly="/month" data-annual="/month, billed annually">/month</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Basic jetting calculations</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Manual weather input</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Limited history (5 saves)</li>
+                            <li class="mb-2 text-muted"><i class="fas fa-times text-danger me-2"></i> Automatic weather data</li>
+                            <li class="mb-2 text-muted"><i class="fas fa-times text-danger me-2"></i> Track-specific recommendations</li>
+                            <li class="mb-2 text-muted"><i class="fas fa-times text-danger me-2"></i> Team sharing</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4">
+                        <a href="#" class="btn btn-outline-primary d-block">Choose Basic</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pro Plan -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow position-relative">
+                    <div class="position-absolute top-0 start-50 translate-middle">
+                        <span class="badge bg-primary px-3 py-2 rounded-pill">Most Popular</span>
+                    </div>
+                    <div class="card-header bg-white border-0 pt-4 pb-0">
+                        <h3 class="text-center mb-0">Pro</h3>
+                        <div class="price text-center my-3">
+                            <span class="currency">$</span>
+                            <span class="amount display-5 fw-bold" data-monthly="9.99" data-annual="7.99">9.99</span>
+                            <span class="period text-muted" data-monthly="/month" data-annual="/month, billed annually">/month</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Advanced jetting calculations</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Automatic weather data</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Unlimited history</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Track-specific recommendations</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Email support</li>
+                            <li class="mb-2 text-muted"><i class="fas fa-times text-danger me-2"></i> Team sharing</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4">
+                        <a href="#" class="btn btn-primary d-block">Choose Pro</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Team Plan -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 pt-4 pb-0">
+                        <h3 class="text-center mb-0">Team</h3>
+                        <div class="price text-center my-3">
+                            <span class="currency">$</span>
+                            <span class="amount display-5 fw-bold" data-monthly="24.99" data-annual="19.99">24.99</span>
+                            <span class="period text-muted" data-monthly="/month" data-annual="/month, billed annually">/month</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> All Pro features</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Up to 5 team members</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Team data sharing</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Priority support</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Custom engine profiles</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> API access</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-4">
+                        <a href="#" class="btn btn-outline-primary d-block">Choose Team</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <p class="text-muted">All plans include a 14-day free trial. No credit card required.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Feature Comparison -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">Feature Comparison</h2>
+            <p class="lead text-muted">See what's included in each plan</p>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th style="min-width: 280px;">Feature</th>
+                        <th class="text-center">Basic</th>
+                        <th class="text-center">Pro</th>
+                        <th class="text-center">Team</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Jetting Calculations</strong></td>
+                        <td class="text-center">Basic</td>
+                        <td class="text-center">Advanced</td>
+                        <td class="text-center">Advanced</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Weather Data</strong></td>
+                        <td class="text-center">Manual Input</td>
+                        <td class="text-center">Automatic</td>
+                        <td class="text-center">Automatic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Saved Settings</strong></td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">Unlimited</td>
+                        <td class="text-center">Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Track-specific Recommendations</strong></td>
+                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                        <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                        <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Weather Alerts</strong></td>
+                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                        <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                        <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Historical Weather Data</strong></td>
+                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                        <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                        <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Team Members</strong></td>
+                        <td class="text-center">1</td>
+                        <td class="text-center">1</td>
+                        <td class="text-center">5</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Team Data Sharing</strong></td>
+                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                        <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Custom Engine Profiles</strong></td>
+                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                        <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                    </tr>
+                    <tr>
+                        <td><strong>API Access</strong></td>
+                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
+                        <td class="text-center"><i class="fas fa-check text-success"></i></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Support</strong></td>
+                        <td class="text-center">Email</td>
+                        <td class="text-center">Email</td>
+                        <td class="text-center">Priority</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">Frequently Asked Questions</h2>
+            <p class="lead text-muted">Find answers to common questions about our plans</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion" id="pricingFAQ">
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Can I cancel my subscription at any time?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#pricingFAQ">
+                            <div class="accordion-body">
+                                Yes, you can cancel your subscription at any time. You'll continue to have access until the end of your current billing period.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                What happens after my free trial ends?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#pricingFAQ">
+                            <div class="accordion-body">
+                                If you don't subscribe to a paid plan, your account will automatically downgrade to the limited free version, which allows one calculation per day and no saved settings.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                How do I add team members to my Team plan?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#pricingFAQ">
+                            <div class="accordion-body">
+                                After subscribing to the Team plan, go to your account page, click the "Team" tab, and use the "Add Member" button to invite team members by email.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Can I upgrade or downgrade my plan later?
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#pricingFAQ">
+                            <div class="accordion-body">
+                                Yes, you can upgrade or downgrade your plan at any time. If you upgrade, the change will take effect immediately. If you downgrade, the change will take effect at the end of your current billing period.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                Do you offer discounts for racing teams or schools?
+                            </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#pricingFAQ">
+                            <div class="accordion-body">
+                                Yes, we offer special pricing for racing teams and karting schools with more than 5 members. Please contact our sales team at sales@rotaxprojet.com for more information.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h2 class="display-5 fw-bold mb-3">Ready to optimize your kart's performance?</h2>
+                <p class="lead mb-0">Join thousands of racers who trust Rotax Pro Jet for precise jetting recommendations.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('register') }}" class="btn btn-light btn-lg">Start Free Trial</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Billing toggle
+        $('#billingToggle').change(function() {
+            const isAnnual = $(this).is(':checked');
+            
+            // Update prices
+            $('.amount').each(function() {
+                const monthlyPrice = $(this).data('monthly');
+                const annualPrice = $(this).data('annual');
+                $(this).text(isAnnual ? annualPrice : monthlyPrice);
+            });
+            
+            // Update periods
+            $('.period').each(function() {
+                const monthlyPeriod = $(this).data('monthly');
+                const annualPeriod = $(this).data('annual');
+                $(this).text(isAnnual ? annualPeriod : monthlyPeriod);
+            });
+        });
+    });
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .price .currency {
+        font-size: 1.5rem;
+        position: relative;
+        top: -1rem;
+    }
+    
+    .price .period {
+        font-size: 1rem;
+    }
+    
+    .billing-annual {
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

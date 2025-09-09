@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - Rotax Pro Jet{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold">Contact Us</h1>
+            <p class="lead text-muted">Have questions or feedback? We'd love to hear from you.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Contact Form -->
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="h3 mb-4">Send us a message</h2>
+                        <form id="contact-form">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="subject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" id="subject" name="subject" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-control" id="message" name="message" rows="6" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="privacy-policy" required>
+                                        <label class="form-check-label" for="privacy-policy">
+                                            I agree to the <a href="#">Privacy Policy</a> and consent to being contacted regarding my inquiry.
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Information -->
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm bg-primary text-white mb-4">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="h3 mb-4">Contact Information</h2>
+                        <div class="d-flex mb-4">
+                            <div class="contact-icon me-3">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h5 class="h6 mb-1">Email</h5>
+                                <p class="mb-0"><a href="mailto:support@rotaxprojet.com" class="text-white">support@rotaxprojet.com</a></p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-4">
+                            <div class="contact-icon me-3">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h5 class="h6 mb-1">Phone</h5>
+                                <p class="mb-0"><a href="tel:+15551234567" class="text-white">+1 (555) 123-4567</a></p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-4">
+                            <div class="contact-icon me-3">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h5 class="h6 mb-1">Address</h5>
+                                <p class="mb-0">123 Racing Lane<br>Kartville, KT 12345<br>United States</p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-4">
+                            <div class="contact-icon me-3">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h5 class="h6 mb-1">Business Hours</h5>
+                                <p class="mb-0">Monday - Friday: 9am - 5pm EST<br>Saturday - Sunday: Closed</p>
+                            </div>
+                        </div>
+                        <div class="social-links mt-4">
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h2 class="h3 mb-4">Frequently Asked Questions</h2>
+                        <div class="accordion" id="contactFAQ">
+                            <div class="accordion-item border-0 mb-3">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        How quickly will I receive a response?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#contactFAQ">
+                                    <div class="accordion-body">
+                                        We aim to respond to all inquiries within 24 hours during business days. For urgent matters, please call our support line.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        I'm having technical issues with the app. What should I do?
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#contactFAQ">
+                                    <div class="accordion-body">
+                                        Please provide as much detail as possible about the issue you're experiencing, including your device, browser, and steps to reproduce the problem. Our technical team will help you resolve it quickly.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Do you offer custom solutions for racing teams?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#contactFAQ">
+                                    <div class="accordion-body">
+                                        Yes, we offer custom solutions for racing teams and karting schools. Please contact our sales team at sales@rotaxprojet.com to discuss your specific requirements.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="h3">Find Us</h2>
+            <p class="text-muted">Visit our office or send us mail</p>
+        </div>
+        <div class="map-container shadow-sm rounded">
+            <!-- Replace with actual Google Maps embed code in production -->
+            <div class="ratio ratio-21x9">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215573814498!2d-73.98784492426385!3d40.75798833646342!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b30eac9f%3A0x4170c5d45c7c6643!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1695234158413!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Message Sent</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="fas fa-check-circle text-success fa-4x mb-3"></i>
+                <h4>Thank You!</h4>
+                <p>Your message has been sent successfully. We'll get back to you as soon as possible.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Handle form submission
+        $('#contact-form').submit(function(e) {
+            e.preventDefault();
+            
+            // In a real implementation, we would send the form data to the server
+            // For now, we'll just show the success modal
+            $('#successModal').modal('show');
+            
+            // Reset form
+            this.reset();
+        });
+    });
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-icon {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .social-links {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .social-link {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: background-color 0.3s;
+    }
+    
+    .social-link:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+        color: white;
+    }
+    
+    .map-container {
+        overflow: hidden;
+    }
+</style>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

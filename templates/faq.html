@@ -1,0 +1,367 @@
+{% extends 'base.html' %}
+
+{% block title %}FAQ - Rotax Pro Jet{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold">Frequently Asked Questions</h1>
+            <p class="lead text-muted">Find answers to common questions about Rotax Pro Jet</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- FAQ Categories -->
+                <ul class="nav nav-pills mb-4 justify-content-center" id="faqTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="general-tab" data-bs-toggle="pill" data-bs-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">General</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="calculator-tab" data-bs-toggle="pill" data-bs-target="#calculator" type="button" role="tab" aria-controls="calculator" aria-selected="false">Calculator</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="account-tab" data-bs-toggle="pill" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="false">Account & Billing</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="technical-tab" data-bs-toggle="pill" data-bs-target="#technical" type="button" role="tab" aria-controls="technical" aria-selected="false">Technical</button>
+                    </li>
+                </ul>
+                
+                <!-- FAQ Content -->
+                <div class="tab-content" id="faqTabContent">
+                    <!-- General FAQs -->
+                    <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                        <div class="accordion" id="accordionGeneral">
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingG1">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseG1" aria-expanded="true" aria-controls="collapseG1">
+                                        What is Rotax Pro Jet?
+                                    </button>
+                                </h2>
+                                <div id="collapseG1" class="accordion-collapse collapse show" aria-labelledby="headingG1" data-bs-parent="#accordionGeneral">
+                                    <div class="accordion-body">
+                                        <p>Rotax Pro Jet is a web application designed to help Rotax kart racers optimize their carburetor jetting based on environmental conditions. It uses mathematical models to calculate the ideal main jet size, needle position, and float height for your specific conditions.</p>
+                                        <p>Our calculations are based on the research from Bowmain Consulting on Rotax carburetor jetting, providing scientifically accurate recommendations that take the guesswork out of jetting.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingG2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseG2" aria-expanded="false" aria-controls="collapseG2">
+                                        Which Rotax engines are supported?
+                                    </button>
+                                </h2>
+                                <div id="collapseG2" class="accordion-collapse collapse" aria-labelledby="headingG2" data-bs-parent="#accordionGeneral">
+                                    <div class="accordion-body">
+                                        <p>Rotax Pro Jet currently supports the following Rotax MAX kart engines:</p>
+                                        <ul>
+                                            <li>Senior MAX EVO</li>
+                                            <li>Junior MAX EVO</li>
+                                            <li>Mini MAX</li>
+                                        </ul>
+                                        <p>We're continuously working to add support for more engine variants. If you need support for a specific engine that's not listed, please contact us.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingG3">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseG3" aria-expanded="false" aria-controls="collapseG3">
+                                        How accurate are the jetting recommendations?
+                                    </button>
+                                </h2>
+                                <div id="collapseG3" class="accordion-collapse collapse" aria-labelledby="headingG3" data-bs-parent="#accordionGeneral">
+                                    <div class="accordion-body">
+                                        <p>Our jetting recommendations are based on scientific calculations and have been validated through extensive track testing. However, they should be used as a starting point for your setup.</p>
+                                        <p>Factors such as engine condition, exhaust system, and driving style can influence the optimal jetting. We recommend verifying our recommendations by checking spark plug color and monitoring engine performance.</p>
+                                        <p>Many users report that our recommendations are spot-on, while others may need to make minor adjustments based on their specific setup.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingG4">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseG4" aria-expanded="false" aria-controls="collapseG4">
+                                        Do I need any special equipment to use Rotax Pro Jet?
+                                    </button>
+                                </h2>
+                                <div id="collapseG4" class="accordion-collapse collapse" aria-labelledby="headingG4" data-bs-parent="#accordionGeneral">
+                                    <div class="accordion-body">
+                                        <p>No special equipment is needed! Rotax Pro Jet works on any modern web browser and can be accessed from your smartphone, tablet, or computer.</p>
+                                        <p>You don't need weather instruments or measuring tools, as our application can automatically fetch weather data for your location. However, if you prefer, you can also manually enter temperature, pressure, and humidity values from your own instruments.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Calculator FAQs -->
+                    <div class="tab-pane fade" id="calculator" role="tabpanel" aria-labelledby="calculator-tab">
+                        <div class="accordion" id="accordionCalculator">
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingC1">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseC1" aria-expanded="true" aria-controls="collapseC1">
+                                        How does the jetting calculator work?
+                                    </button>
+                                </h2>
+                                <div id="collapseC1" class="accordion-collapse collapse show" aria-labelledby="headingC1" data-bs-parent="#accordionCalculator">
+                                    <div class="accordion-body">
+                                        <p>Our jetting calculator uses the following formula derived from Bowmain Consulting's research:</p>
+                                        <div class="bg-light p-3 rounded mb-3">
+                                            <code>j₂ = j₁ × (ρ₂/ρ₁)^(1/4)</code>
+                                        </div>
+                                        <p>Where:</p>
+                                        <ul>
+                                            <li>j₂ is the recommended jet size</li>
+                                            <li>j₁ is the reference jet size</li>
+                                            <li>ρ₂ is the current air density</li>
+                                            <li>ρ₁ is the reference air density</li>
+                                        </ul>
+                                        <p>Air density is calculated based on temperature, pressure, and humidity using standard atmospheric equations. The calculator then applies additional algorithms to determine the optimal needle position and float height.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingC2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseC2" aria-expanded="false" aria-controls="collapseC2">
+                                        What are reference conditions?
+                                    </button>
+                                </h2>
+                                <div id="collapseC2" class="accordion-collapse collapse" aria-labelledby="headingC2" data-bs-parent="#accordionCalculator">
+                                    <div class="accordion-body">
+                                        <p>Reference conditions are the baseline environmental conditions and jet size that you know work well for your engine. By default, we use the Rotax standard reference conditions:</p>
+                                        <ul>
+                                            <li>Temperature: 25°C (77°F)</li>
+                                            <li>Pressure: 990 hPa</li>
+                                            <li>Humidity: 0%</li>
+                                            <li>Air density: 1.157 kg/m³</li>
+                                        </ul>
+                                        <p>Advanced users can set custom reference conditions if they have a known good setup for specific conditions. This can help fine-tune the recommendations for your particular engine.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingC3">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseC3" aria-expanded="false" aria-controls="collapseC3">
+                                        How do I know if the recommended jet is correct?
+                                    </button>
+                                </h2>
+                                <div id="collapseC3" class="accordion-collapse collapse" aria-labelledby="headingC3" data-bs-parent="#accordionCalculator">
+                                    <div class="accordion-body">
+                                        <p>The best way to verify if the recommended jet is correct is to check your spark plug color after a full-throttle run:</p>
+                                        <ul>
+                                            <li><strong>Light tan color:</strong> Optimal mixture</li>
+                                            <li><strong>Black or sooty:</strong> Mixture is too rich (larger jet than needed)</li>
+                                            <li><strong>White or light gray:</strong> Mixture is too lean (smaller jet than needed)</li>
+                                        </ul>
+                                        <p>You should also pay attention to engine performance. A properly jetted engine will have crisp throttle response, good acceleration, and consistent top-end power. If the engine hesitates, bogs down, or overheats, the jetting may need adjustment.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingC4">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseC4" aria-expanded="false" aria-controls="collapseC4">
+                                        Can I save my jetting configurations?
+                                    </button>
+                                </h2>
+                                <div id="collapseC4" class="accordion-collapse collapse" aria-labelledby="headingC4" data-bs-parent="#accordionCalculator">
+                                    <div class="accordion-body">
+                                        <p>Yes, you can save your jetting configurations if you have a registered account:</p>
+                                        <ul>
+                                            <li>Basic plan users can save up to 5 configurations</li>
+                                            <li>Pro and Team plan users can save unlimited configurations</li>
+                                        </ul>
+                                        <p>Saved configurations include all environmental parameters, engine settings, and jetting recommendations. You can add notes to each configuration to track performance and other observations.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Account & Billing FAQs -->
+                    <div class="tab-pane fade" id="account" role="tabpanel" aria-labelledby="account-tab">
+                        <div class="accordion" id="accordionAccount">
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingA1">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseA1" aria-expanded="true" aria-controls="collapseA1">
+                                        What subscription plans do you offer?
+                                    </button>
+                                </h2>
+                                <div id="collapseA1" class="accordion-collapse collapse show" aria-labelledby="headingA1" data-bs-parent="#accordionAccount">
+                                    <div class="accordion-body">
+                                        <p>We offer three subscription plans:</p>
+                                        <ul>
+                                            <li><strong>Basic ($4.99/month):</strong> Basic jetting calculations, manual weather input, limited history (5 saves)</li>
+                                            <li><strong>Pro ($9.99/month):</strong> Advanced jetting calculations, automatic weather data, unlimited history, track-specific recommendations, email support</li>
+                                            <li><strong>Team ($24.99/month):</strong> All Pro features, up to 5 team members, team data sharing, priority support, custom engine profiles, API access</li>
+                                        </ul>
+                                        <p>All plans include a 14-day free trial, and we offer a 20% discount for annual subscriptions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingA2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseA2" aria-expanded="false" aria-controls="collapseA2">
+                                        Can I cancel my subscription at any time?
+                                    </button>
+                                </h2>
+                                <div id="collapseA2" class="accordion-collapse collapse" aria-labelledby="headingA2" data-bs-parent="#accordionAccount">
+                                    <div class="accordion-body">
+                                        <p>Yes, you can cancel your subscription at any time. You'll continue to have access to your subscription features until the end of your current billing period.</p>
+                                        <p>To cancel your subscription:</p>
+                                        <ol>
+                                            <li>Log in to your account</li>
+                                            <li>Go to your profile</li>
+                                            <li>Click on the "Subscription" tab</li>
+                                            <li>Click "Cancel Subscription"</li>
+                                        </ol>
+                                        <p>There are no cancellation fees or penalties.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingA3">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseA3" aria-expanded="false" aria-controls="collapseA3">
+                                        What happens after my free trial ends?
+                                    </button>
+                                </h2>
+                                <div id="collapseA3" class="accordion-collapse collapse" aria-labelledby="headingA3" data-bs-parent="#accordionAccount">
+                                    <div class="accordion-body">
+                                        <p>If you don't subscribe to a paid plan, your account will automatically downgrade to the limited free version when your 14-day trial ends. The free version allows one calculation per day and doesn't include saved settings.</p>
+                                        <p>You can upgrade to a paid plan at any time to regain access to all features. Your saved settings will be preserved even if you downgrade to the free version, but you won't be able to access them until you upgrade again.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingA4">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseA4" aria-expanded="false" aria-controls="collapseA4">
+                                        How do I add team members to my Team plan?
+                                    </button>
+                                </h2>
+                                <div id="collapseA4" class="accordion-collapse collapse" aria-labelledby="headingA4" data-bs-parent="#accordionAccount">
+                                    <div class="accordion-body">
+                                        <p>After subscribing to the Team plan, you can add up to 5 team members:</p>
+                                        <ol>
+                                            <li>Log in to your account</li>
+                                            <li>Go to your profile</li>
+                                            <li>Click on the "Team" tab</li>
+                                            <li>Click "Add Member"</li>
+                                            <li>Enter the email address of the person you want to invite</li>
+                                        </ol>
+                                        <p>The invited person will receive an email with instructions to join your team. They'll need to create an account if they don't already have one.</p>
+                                        <p>If you need more than 5 team members, please contact us for custom pricing.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Technical FAQs -->
+                    <div class="tab-pane fade" id="technical" role="tabpanel" aria-labelledby="technical-tab">
+                        <div class="accordion" id="accordionTechnical">
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingT1">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseT1" aria-expanded="true" aria-controls="collapseT1">
+                                        What browsers are supported?
+                                    </button>
+                                </h2>
+                                <div id="collapseT1" class="accordion-collapse collapse show" aria-labelledby="headingT1" data-bs-parent="#accordionTechnical">
+                                    <div class="accordion-body">
+                                        <p>Rotax Pro Jet works on all modern web browsers, including:</p>
+                                        <ul>
+                                            <li>Google Chrome (version 90+)</li>
+                                            <li>Mozilla Firefox (version 88+)</li>
+                                            <li>Apple Safari (version 14+)</li>
+                                            <li>Microsoft Edge (version 90+)</li>
+                                        </ul>
+                                        <p>The application is also mobile-friendly and works on smartphones and tablets running iOS or Android.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingT2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseT2" aria-expanded="false" aria-controls="collapseT2">
+                                        How accurate is the weather data?
+                                    </button>
+                                </h2>
+                                <div id="collapseT2" class="accordion-collapse collapse" aria-labelledby="headingT2" data-bs-parent="#accordionTechnical">
+                                    <div class="accordion-body">
+                                        <p>We use reliable weather data providers to ensure the most accurate information possible. However, weather conditions can vary significantly even within short distances, especially at racetracks with varying elevation or near bodies of water.</p>
+                                        <p>For the most accurate results, we recommend:</p>
+                                        <ul>
+                                            <li>Using the "Current Location" feature when you're physically at the track</li>
+                                            <li>Taking measurements at the specific area of the track where you'll be racing</li>
+                                            <li>Updating the weather data periodically throughout the day if conditions are changing</li>
+                                        </ul>
+                                        <p>If you have your own weather instruments, you can also manually enter the values for maximum accuracy.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingT3">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseT3" aria-expanded="false" aria-controls="collapseT3">
+                                        Is there an offline mode?
+                                    </button>
+                                </h2>
+                                <div id="collapseT3" class="accordion-collapse collapse" aria-labelledby="headingT3" data-bs-parent="#accordionTechnical">
+                                    <div class="accordion-body">
+                                        <p>Currently, Rotax Pro Jet requires an internet connection to function properly, especially for fetching weather data and saving settings to your account.</p>
+                                        <p>However, we understand that many racetracks have limited or no internet connectivity. We're working on an offline mode that will allow you to:</p>
+                                        <ul>
+                                            <li>Manually enter weather data</li>
+                                            <li>Calculate jetting recommendations offline</li>
+                                            <li>Access previously saved settings</li>
+                                            <li>Sync changes when you're back online</li>
+                                        </ul>
+                                        <p>This feature is on our roadmap and will be available in a future update.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-0 mb-3 shadow-sm">
+                                <h2 class="accordion-header" id="headingT4">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseT4" aria-expanded="false" aria-controls="collapseT4">
+                                        Do you have an API?
+                                    </button>
+                                </h2>
+                                <div id="collapseT4" class="accordion-collapse collapse" aria-labelledby="headingT4" data-bs-parent="#accordionTechnical">
+                                    <div class="accordion-body">
+                                        <p>Yes, we offer API access with our Team plan. The API allows you to:</p>
+                                        <ul>
+                                            <li>Integrate jetting calculations into your own applications</li>
+                                            <li>Fetch and store jetting data programmatically</li>
+                                            <li>Build custom tools and dashboards for your team</li>
+                                        </ul>
+                                        <p>API documentation is available to Team plan subscribers in the developer section of their account dashboard. If you need custom API features or higher rate limits, please contact us to discuss enterprise options.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Still Have Questions -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-6 fw-bold mb-3">Still Have Questions?</h2>
+                <p class="lead mb-4">We're here to help. Contact our support team for assistance.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary">Contact Us</a>
+                    <a href="mailto:support@rotaxprojet.com" class="btn btn-outline-primary">Email Support</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

@@ -1,0 +1,16 @@
+server {
+    listen 80;
+    server_name rotaxprojet.com www.rotaxprojet.com;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    
+    location /static/ {
+        root /var/www/rotax-pro-jet;
+        expires 30d;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/var/www/rotax-pro-jet/rotax-pro-jet.sock;
+    }
+}

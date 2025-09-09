@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+
+{% block title %}Saved Settings - Rotax Pro Jet{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0">Saved Settings</h1>
+            <a href="{{ url_for('calculator') }}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Create New
+            </a>
+        </div>
+        
+        {% if settings %}
+            <div class="row g-4">
+                {% for setting in settings %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">{{ setting.name }}</h5>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-link text-dark" type="button" id="dropdownMenuButton{{ setting.id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton{{ setting.id }}">
+                                        <li><a class="dropdown-item load-setting" href="#" data-id="{{ setting.id }}">
+                                            <i class="fas fa-sync-alt me-2"></i>Load
+                                        </a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                            <i class="fas fa-edit me-2"></i>Rename
+                                        </a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item text-danger delete-setting" href="#" data-id="{{ setting.id }}">
+                                            <i class="fas fa-trash-alt me-2"></i>Delete
+                                        </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <div class="text-muted">Engine Type:</div>
+                                        <div class="fw-bold">{{ setting.engine_type }}</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <div class="text-muted">Temperature:</div>
+                                        <div>{{ setting.temperature }}°C</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <div class="text-muted">Pressure:</div>
+                                        <div>{{ setting.pressure }} hPa</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <div class="text-muted">Humidity:</div>
+                                        <div>{{ setting.humidity }}%</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <div class="text-muted">Altitude:</div>
+                                        <div>{{ setting.altitude }} m</div>
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div class="row text-center">
+                                    <div class="col-4">
+                                        <div class="text-muted small">Main Jet</div>
+                                        <div class="fw-bold text-primary">{{ setting.main_jet }}</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-muted small">Needle Pos.</div>
+                                        <div class="fw-bold text-primary">{{ setting.needle_position }}</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-muted small">Float Height</div>
+                                        <div class="fw-bold text-primary">{{ setting.float_height }}</div>
+                                    </div>
+                                </div>
+                                
+                                {% if setting.notes %}
+                                    <div class="mt-3 pt-3 border-top">
+                                        <div class="text-muted mb-1">Notes:</div>
+                                        <p class="mb-0 small">{{ setting.notes }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer bg-white text-muted small">
+                                <i class="far fa-calendar-alt me-1"></i>Created on {{ setting.created_at.strftime('%b %d, %Y') }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-5 text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-save fa-4x text-muted"></i>
+                    </div>
+                    <h3 class="h4 mb-3">No saved settings yet</h3>
+                    <p class="text-muted mb-4">Save your jetting configurations to access them quickly in the future.</p>
+                    <a href="{{ url_for('calculator') }}" class="btn btn-primary">
+                        <i class="fas fa-calculator me-2"></i>Go to Calculator
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteSettingModal" tabindex="-1" aria-labelledby="deleteSettingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteSettingModalLabel">Delete Setting</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this saved setting? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        let settingToDelete = null;
+        
+        // Load setting
+        $('.load-setting').click(function(e) {
+            e.preventDefault();
+            const settingId = $(this).data('id');
+            
+            // In a real implementation, we would redirect to the calculator page with the setting ID
+            window.location.href = "{{ url_for('calculator') }}?load=" + settingId;
+        });
+        
+        // Delete setting
+        $('.delete-setting').click(function(e) {
+            e.preventDefault();
+            settingToDelete = $(this).data('id');
+            $('#deleteSettingModal').modal('show');
+        });
+        
+        // Confirm delete
+        $('#confirm-delete').click(function() {
+            if (settingToDelete) {
+                // Send request to API
+                $.ajax({
+                    url: `/api/settings/${settingToDelete}/delete`,
+                    method: 'DELETE',
+                    success: function(result) {
+                        // Close modal
+                        $('#deleteSettingModal').modal('hide');
+                        
+                        // Show success message
+                        alert('Setting deleted successfully!');
+                        
+                        // Reload page
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.error('Error deleting setting:', error);
+                        alert('Error deleting setting. Please try again.');
+                        
+                        // Close modal
+                        $('#deleteSettingModal').modal('hide');
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

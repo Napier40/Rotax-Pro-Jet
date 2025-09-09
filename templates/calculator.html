@@ -1,0 +1,774 @@
+{% extends 'base.html' %}
+
+{% block title %}Jetting Calculator - Rotax Pro Jet{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold">Jetting Calculator</h1>
+            <p class="lead text-muted">Get precise jetting recommendations for your Rotax kart engine</p>
+        </div>
+        
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <!-- Calculator Tabs -->
+                <ul class="nav nav-tabs mb-4" id="calculatorTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="location-tab" data-bs-toggle="tab" data-bs-target="#location-panel" type="button" role="tab" aria-controls="location-panel" aria-selected="true">
+                            <i class="fas fa-map-marker-alt me-2"></i>Location
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="manual-tab" data-bs-toggle="tab" data-bs-target="#manual-panel" type="button" role="tab" aria-controls="manual-panel" aria-selected="false">
+                            <i class="fas fa-sliders-h me-2"></i>Manual Input
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="saved-tab" data-bs-toggle="tab" data-bs-target="#saved-panel" type="button" role="tab" aria-controls="saved-panel" aria-selected="false">
+                            <i class="fas fa-save me-2"></i>Saved Settings
+                        </button>
+                    </li>
+                </ul>
+                
+                <!-- Tab Content -->
+                <div class="tab-content" id="calculatorTabContent">
+                    <!-- Location Tab -->
+                    <div class="tab-pane fade show active" id="location-panel" role="tabpanel" aria-labelledby="location-tab">
+                        <div class="mb-4">
+                            <label for="track-search" class="form-label">Search for your track or location:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="track-search" placeholder="Enter track name or location...">
+                                <button class="btn btn-primary" type="button" id="search-btn">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+                            </div>
+                            <div class="search-results mt-2" id="search-results" style="display: none;">
+                                <!-- Search results will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Or use your current location:</label>
+                            <button class="btn btn-outline-primary" type="button" id="current-location-btn">
+                                <i class="fas fa-location-arrow me-2"></i>Use Current Location
+                            </button>
+                        </div>
+                        
+                        <div class="selected-location p-3 bg-light rounded" id="selected-location" style="display: none;">
+                            <!-- Selected location details will be shown here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Manual Input Tab -->
+                    <div class="tab-pane fade" id="manual-panel" role="tabpanel" aria-labelledby="manual-tab">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="temperature" class="form-label">Temperature (°C):</label>
+                                <input type="number" class="form-control" id="temperature" placeholder="e.g., 25" step="0.1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="pressure" class="form-label">Pressure (hPa):</label>
+                                <input type="number" class="form-control" id="pressure" placeholder="e.g., 1013" step="0.1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="humidity" class="form-label">Humidity (%):</label>
+                                <input type="number" class="form-control" id="humidity" placeholder="e.g., 50" min="0" max="100">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="altitude" class="form-label">Altitude (m):</label>
+                                <input type="number" class="form-control" id="altitude" placeholder="e.g., 100">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Saved Settings Tab -->
+                    <div class="tab-pane fade" id="saved-panel" role="tabpanel" aria-labelledby="saved-tab">
+                        {% if current_user.is_authenticated %}
+                            <div id="saved-settings-list">
+                                {% if settings %}
+                                    <div class="list-group">
+                                        {% for setting in settings %}
+                                            <div class="list-group-item list-group-item-action">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h5 class="mb-1">{{ setting.name }}</h5>
+                                                    <small class="text-muted">{{ setting.created_at.strftime('%Y-%m-%d') }}</small>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-6">
+                                                        <small class="text-muted">
+                                                            <i class="fas fa-thermometer-half me-1"></i> {{ setting.temperature }}°C
+                                                            <i class="fas fa-tachometer-alt ms-2 me-1"></i> {{ setting.pressure }} hPa
+                                                            <i class="fas fa-water ms-2 me-1"></i> {{ setting.humidity }}%
+                                                        </small>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <small class="text-muted">
+                                                            <i class="fas fa-mountain me-1"></i> {{ setting.altitude }} m
+                                                            <i class="fas fa-cog ms-2 me-1"></i> {{ setting.engine_type }}
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <span class="badge bg-primary me-1">Jet: {{ setting.main_jet }}</span>
+                                                        <span class="badge bg-secondary me-1">Needle: {{ setting.needle_position }}</span>
+                                                        <span class="badge bg-info">Float: {{ setting.float_height }}</span>
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-sm btn-outline-primary load-setting" data-id="{{ setting.id }}">Load</button>
+                                                        <button class="btn btn-sm btn-outline-danger delete-setting" data-id="{{ setting.id }}">Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <div class="text-center py-4">
+                                        <i class="fas fa-save fa-3x text-muted mb-3"></i>
+                                        <p>You have no saved settings yet.</p>
+                                        <p class="text-muted">Calculate and save your first setting to see it here.</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-4">
+                                <i class="fas fa-lock fa-3x text-muted mb-3"></i>
+                                <p>Please log in to view your saved settings.</p>
+                                <a href="{{ url_for('login') }}" class="btn btn-primary mt-2">Log In</a>
+                                <a href="{{ url_for('register') }}" class="btn btn-outline-primary mt-2 ms-2">Sign Up</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Engine Settings (Common to all tabs) -->
+                <div class="mt-4 pt-4 border-top">
+                    <h4 class="mb-3">Engine Settings</h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="engine-type" class="form-label">Engine Type:</label>
+                            <select class="form-select" id="engine-type">
+                                {% for engine_type in engine_types %}
+                                    <option value="{{ engine_type }}">{{ engine_type }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="reference-jet" class="form-label">Reference Jet Size:</label>
+                            <input type="number" class="form-control" id="reference-jet" placeholder="e.g., 130">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="use-custom-reference">
+                            <label class="form-check-label" for="use-custom-reference">
+                                Use custom reference conditions
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="reference-conditions-inputs" class="mt-3 p-3 bg-light rounded" style="display: none;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="ref-temperature" class="form-label">Reference Temperature (°C):</label>
+                                <input type="number" class="form-control" id="ref-temperature" value="25" step="0.1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ref-pressure" class="form-label">Reference Pressure (hPa):</label>
+                                <input type="number" class="form-control" id="ref-pressure" value="990" step="0.1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ref-humidity" class="form-label">Reference Humidity (%):</label>
+                                <input type="number" class="form-control" id="ref-humidity" value="0" min="0" max="100">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ref-altitude" class="form-label">Reference Altitude (m):</label>
+                                <input type="number" class="form-control" id="ref-altitude" value="400">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Calculator Actions -->
+                <div class="mt-4 d-flex flex-wrap gap-2">
+                    <button type="button" class="btn btn-primary" id="calculate-btn">
+                        <i class="fas fa-calculator me-2"></i>Calculate Jetting
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" id="save-settings-btn" {% if not current_user.is_authenticated %}disabled{% endif %}>
+                        <i class="fas fa-save me-2"></i>Save Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Section -->
+        <div class="card border-0 shadow-sm mt-4" id="results-container" style="display: none;">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="mb-0">Jetting Recommendations</h3>
+                    <span class="text-muted" id="results-timestamp"></span>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="card h-100 bg-light border-0">
+                            <div class="card-body text-center p-4">
+                                <h4 class="text-primary mb-2">Main Jet</h4>
+                                <div class="display-4 fw-bold mb-0" id="result-main-jet"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 bg-light border-0">
+                            <div class="card-body text-center p-4">
+                                <h4 class="text-primary mb-2">Needle Position</h4>
+                                <div class="display-4 fw-bold mb-0" id="result-needle-position"></div>
+                                <div class="text-muted">Clip Position</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 bg-light border-0">
+                            <div class="card-body text-center p-4">
+                                <h4 class="text-primary mb-2">Float Height</h4>
+                                <div class="display-4 fw-bold mb-0" id="result-float-height"></div>
+                                <div class="text-muted">mm</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100 bg-light border-0">
+                            <div class="card-body text-center p-4">
+                                <h4 class="text-primary mb-2">Needle Type</h4>
+                                <div class="display-4 fw-bold mb-0" id="result-needle-type"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h4>Calculation Details</h4>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 200px;">Current Air Density:</th>
+                                    <td id="result-current-density"></td>
+                                </tr>
+                                <tr>
+                                    <th>Reference Air Density:</th>
+                                    <td id="result-reference-density"></td>
+                                </tr>
+                                <tr>
+                                    <th>Density Ratio:</th>
+                                    <td id="result-density-ratio"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="mt-4" id="warnings-container" style="display: none;">
+                    <div class="alert alert-warning">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>Warnings</h5>
+                        <ul class="mb-0" id="warnings-list">
+                            <!-- Warnings will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h4>Notes</h4>
+                    <ul>
+                        <li>These recommendations are based on mathematical models and should be used as a starting point.</li>
+                        <li>Always verify jetting by checking spark plug color and engine performance.</li>
+                        <li>For best results, keep track of your jetting changes and engine performance in different conditions.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Save Settings Modal -->
+<div class="modal fade" id="saveSettingsModal" tabindex="-1" aria-labelledby="saveSettingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="saveSettingsModalLabel">Save Settings</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="save-settings-form">
+                    <div class="mb-3">
+                        <label for="settings-name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="settings-name" placeholder="e.g., Summer Setup - ABC Track" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="settings-notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="settings-notes" rows="3" placeholder="Add any notes about these settings..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="save-settings-confirm">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Toggle reference conditions inputs
+        $('#use-custom-reference').change(function() {
+            if ($(this).is(':checked')) {
+                $('#reference-conditions-inputs').slideDown();
+            } else {
+                $('#reference-conditions-inputs').slideUp();
+            }
+        });
+        
+        // Current location button
+        $('#current-location-btn').click(function() {
+            const button = $(this);
+            const originalText = button.html();
+            
+            button.html('<i class="fas fa-spinner fa-spin me-2"></i>Getting location...');
+            button.prop('disabled', true);
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    // Success callback
+                    function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        
+                        // Fetch weather and location data
+                        fetchWeatherData(latitude, longitude)
+                            .then(data => {
+                                displaySelectedLocation(data);
+                                
+                                // Reset button
+                                button.html(originalText);
+                                button.prop('disabled', false);
+                            })
+                            .catch(error => {
+                                console.error('Error fetching weather data:', error);
+                                alert('Error fetching weather data. Please try again or enter location manually.');
+                                
+                                // Reset button
+                                button.html(originalText);
+                                button.prop('disabled', false);
+                            });
+                    },
+                    // Error callback
+                    function(error) {
+                        console.error('Geolocation error:', error);
+                        alert('Unable to get your location. Please allow location access or enter location manually.');
+                        
+                        // Reset button
+                        button.html(originalText);
+                        button.prop('disabled', false);
+                    }
+                );
+            } else {
+                alert('Geolocation is not supported by your browser. Please enter location manually.');
+                button.html(originalText);
+                button.prop('disabled', false);
+            }
+        });
+        
+        // Search button
+        $('#search-btn').click(function() {
+            const query = $('#track-search').val().trim();
+            
+            if (query.length < 2) {
+                $('#search-results').hide();
+                return;
+            }
+            
+            // Show loading indicator
+            $('#search-results').html('<div class="p-3 text-center"><i class="fas fa-spinner fa-spin me-2"></i>Searching...</div>');
+            $('#search-results').show();
+            
+            // Fetch locations from API
+            $.ajax({
+                url: '/api/weather/search',
+                method: 'GET',
+                data: { query: query },
+                success: function(data) {
+                    if (data.length === 0) {
+                        $('#search-results').html('<div class="p-3 text-center">No locations found. Try a different search term.</div>');
+                        return;
+                    }
+                    
+                    // Display search results
+                    let resultsHtml = '<div class="list-group">';
+                    data.forEach(location => {
+                        resultsHtml += `
+                            <button type="button" class="list-group-item list-group-item-action location-result" 
+                                    data-lat="${location.latitude}" data-lng="${location.longitude}">
+                                <strong>${location.name}</strong>, ${location.country}
+                            </button>
+                        `;
+                    });
+                    resultsHtml += '</div>';
+                    
+                    $('#search-results').html(resultsHtml);
+                    
+                    // Add click event to result items
+                    $('.location-result').click(function() {
+                        const lat = $(this).data('lat');
+                        const lng = $(this).data('lng');
+                        
+                        // Fetch weather data for selected location
+                        fetchWeatherData(lat, lng)
+                            .then(data => {
+                                displaySelectedLocation(data);
+                                $('#search-results').hide();
+                                $('#track-search').val(`${data.location.name}, ${data.location.country}`);
+                            })
+                            .catch(error => {
+                                console.error('Error fetching weather data:', error);
+                                alert('Error fetching weather data. Please try again.');
+                            });
+                    });
+                },
+                error: function(error) {
+                    console.error('Error searching locations:', error);
+                    $('#search-results').html('<div class="p-3 text-center text-danger">Error searching locations. Please try again.</div>');
+                }
+            });
+        });
+        
+        // Calculate button
+        $('#calculate-btn').click(function() {
+            // Get input values
+            const temperature = parseFloat($('#temperature').val());
+            const pressure = parseFloat($('#pressure').val());
+            const humidity = parseFloat($('#humidity').val());
+            const altitude = parseFloat($('#altitude').val());
+            const engineType = $('#engine-type').val();
+            const referenceJet = $('#reference-jet').val() ? parseInt($('#reference-jet').val()) : null;
+            
+            // Validate inputs
+            if (isNaN(temperature) || isNaN(pressure) || isNaN(humidity) || isNaN(altitude)) {
+                alert('Please enter valid values for all environmental parameters.');
+                return;
+            }
+            
+            // Check if using custom reference conditions
+            let referenceConditions = null;
+            if ($('#use-custom-reference').is(':checked')) {
+                const refTemperature = parseFloat($('#ref-temperature').val());
+                const refPressure = parseFloat($('#ref-pressure').val());
+                const refHumidity = parseFloat($('#ref-humidity').val());
+                const refAltitude = parseFloat($('#ref-altitude').val());
+                
+                if (isNaN(refTemperature) || isNaN(refPressure) || isNaN(refHumidity) || isNaN(refAltitude)) {
+                    alert('Please enter valid values for all reference conditions.');
+                    return;
+                }
+                
+                referenceConditions = {
+                    temperature: refTemperature,
+                    pressure: refPressure,
+                    humidity: refHumidity,
+                    altitude: refAltitude
+                };
+            }
+            
+            // Prepare data for API request
+            const data = {
+                temperature,
+                pressure,
+                humidity,
+                altitude,
+                engine_type: engineType,
+                reference_jet: referenceJet,
+                reference_conditions: referenceConditions
+            };
+            
+            // Show loading indicator
+            const button = $(this);
+            const originalText = button.html();
+            button.html('<i class="fas fa-spinner fa-spin me-2"></i>Calculating...');
+            button.prop('disabled', true);
+            
+            // Send request to API
+            $.ajax({
+                url: '/api/calculate',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(result) {
+                    // Display results
+                    displayResults(result);
+                    
+                    // Reset button
+                    button.html(originalText);
+                    button.prop('disabled', false);
+                },
+                error: function(error) {
+                    console.error('Error calculating jetting:', error);
+                    alert('Error calculating jetting. Please try again.');
+                    
+                    // Reset button
+                    button.html(originalText);
+                    button.prop('disabled', false);
+                }
+            });
+        });
+        
+        // Save settings button
+        $('#save-settings-btn').click(function() {
+            {% if current_user.is_authenticated %}
+                // Check if results are available
+                if ($('#results-container').is(':hidden')) {
+                    alert('Please calculate jetting before saving settings.');
+                    return;
+                }
+                
+                // Show save settings modal
+                $('#saveSettingsModal').modal('show');
+            {% else %}
+                alert('Please log in to save your settings.');
+            {% endif %}
+        });
+        
+        // Save settings confirm button
+        $('#save-settings-confirm').click(function() {
+            const settingsName = $('#settings-name').val().trim();
+            const settingsNotes = $('#settings-notes').val().trim();
+            
+            if (!settingsName) {
+                alert('Please enter a name for your settings.');
+                return;
+            }
+            
+            // Get current settings
+            const settings = {
+                temperature: parseFloat($('#temperature').val()),
+                pressure: parseFloat($('#pressure').val()),
+                humidity: parseFloat($('#humidity').val()),
+                altitude: parseFloat($('#altitude').val()),
+                engine_type: $('#engine-type').val(),
+                reference_jet: $('#reference-jet').val() ? parseInt($('#reference-jet').val()) : null
+            };
+            
+            // Get results
+            const results = {
+                main_jet: parseInt($('#result-main-jet').text()),
+                needle_position: parseInt($('#result-needle-position').text()),
+                float_height: parseFloat($('#result-float-height').text()),
+                needle_type: $('#result-needle-type').text()
+            };
+            
+            // Prepare data for API request
+            const data = {
+                name: settingsName,
+                notes: settingsNotes,
+                settings: settings,
+                results: results
+            };
+            
+            // Send request to API
+            $.ajax({
+                url: '/api/settings/save',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(result) {
+                    // Close modal
+                    $('#saveSettingsModal').modal('hide');
+                    
+                    // Show success message
+                    alert('Settings saved successfully!');
+                    
+                    // Reload saved settings if on that tab
+                    if ($('#saved-tab').hasClass('active')) {
+                        location.reload();
+                    }
+                },
+                error: function(error) {
+                    console.error('Error saving settings:', error);
+                    alert('Error saving settings. Please try again.');
+                }
+            });
+        });
+        
+        // Load setting button
+        $(document).on('click', '.load-setting', function() {
+            const settingId = $(this).data('id');
+            
+            // In a real implementation, we would fetch the setting from the server
+            // For now, we'll use the data already in the DOM
+            const listItem = $(this).closest('.list-group-item');
+            
+            // Switch to manual input tab
+            $('#manual-tab').tab('show');
+            
+            // Fill in the form fields
+            // This is a simplified version - in a real app, you would fetch the complete data
+            const temperature = parseFloat(listItem.find('.text-muted:contains("°C")').text());
+            const pressure = parseFloat(listItem.find('.text-muted:contains("hPa")').text());
+            const humidity = parseFloat(listItem.find('.text-muted:contains("%")').text());
+            const altitude = parseFloat(listItem.find('.text-muted:contains("m")').text());
+            const engineType = listItem.find('.text-muted:contains("Rotax")').text();
+            
+            $('#temperature').val(temperature);
+            $('#pressure').val(pressure);
+            $('#humidity').val(humidity);
+            $('#altitude').val(altitude);
+            $('#engine-type').val(engineType);
+            
+            // Calculate jetting
+            $('#calculate-btn').click();
+        });
+        
+        // Delete setting button
+        $(document).on('click', '.delete-setting', function() {
+            if (!confirm('Are you sure you want to delete this saved setting?')) {
+                return;
+            }
+            
+            const settingId = $(this).data('id');
+            
+            // Send request to API
+            $.ajax({
+                url: `/api/settings/${settingId}/delete`,
+                method: 'DELETE',
+                success: function(result) {
+                    // Show success message
+                    alert('Setting deleted successfully!');
+                    
+                    // Reload saved settings
+                    location.reload();
+                },
+                error: function(error) {
+                    console.error('Error deleting setting:', error);
+                    alert('Error deleting setting. Please try again.');
+                }
+            });
+        });
+        
+        // Helper functions
+        function fetchWeatherData(latitude, longitude) {
+            return new Promise((resolve, reject) => {
+                // Fetch weather data
+                $.ajax({
+                    url: `/api/weather/current?latitude=${latitude}&longitude=${longitude}`,
+                    method: 'GET',
+                    success: function(weatherData) {
+                        // Fetch elevation data
+                        $.ajax({
+                            url: `/api/weather/elevation?latitude=${latitude}&longitude=${longitude}`,
+                            method: 'GET',
+                            success: function(elevationData) {
+                                // Combine the data
+                                const data = {
+                                    ...weatherData,
+                                    elevation: elevationData.elevation
+                                };
+                                resolve(data);
+                            },
+                            error: function(error) {
+                                reject(error);
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        reject(error);
+                    }
+                });
+            });
+        }
+        
+        function displaySelectedLocation(data) {
+            const html = `
+                <h5>${data.location.name}, ${data.location.country}</h5>
+                <div class="row g-2">
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-thermometer-half text-primary me-2"></i>
+                            <span>Temperature: ${data.temperature.toFixed(1)}°C</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-tachometer-alt text-primary me-2"></i>
+                            <span>Pressure: ${data.pressure.toFixed(1)} hPa</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-water text-primary me-2"></i>
+                            <span>Humidity: ${data.humidity}%</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-mountain text-primary me-2"></i>
+                            <span>Elevation: ${data.elevation} m</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 text-muted">
+                    <small><i class="fas fa-clock me-1"></i> Last Updated: ${new Date(data.timestamp).toLocaleString()}</small>
+                </div>
+            `;
+            
+            $('#selected-location').html(html);
+            $('#selected-location').show();
+            
+            // Auto-fill the manual inputs with the current weather data
+            $('#temperature').val(data.temperature.toFixed(1));
+            $('#pressure').val(data.pressure.toFixed(1));
+            $('#humidity').val(data.humidity);
+            $('#altitude').val(data.elevation);
+        }
+        
+        function displayResults(result) {
+            // Update result values
+            $('#result-main-jet').text(result.recommendations.main_jet);
+            $('#result-needle-position').text(result.recommendations.needle_position);
+            $('#result-float-height').text(result.recommendations.float_height.toFixed(1));
+            $('#result-needle-type').text(result.recommendations.needle_type);
+            
+            // Update calculation details
+            $('#result-current-density').text(`${result.calculations.current_air_density.toFixed(3)} kg/m³`);
+            $('#result-reference-density').text(`${result.calculations.reference_air_density.toFixed(3)} kg/m³`);
+            $('#result-density-ratio').text(result.calculations.density_ratio.toFixed(3));
+            
+            // Update timestamp
+            $('#results-timestamp').text(`Calculated on ${new Date().toLocaleString()}`);
+            
+            // Handle warnings
+            if (result.warnings && result.warnings.length > 0) {
+                let warningsHtml = '';
+                result.warnings.forEach(warning => {
+                    warningsHtml += `<li>${warning.message}</li>`;
+                });
+                $('#warnings-list').html(warningsHtml);
+                $('#warnings-container').show();
+            } else {
+                $('#warnings-container').hide();
+            }
+            
+            // Show results container
+            $('#results-container').show();
+            
+            // Scroll to results
+            $('html, body').animate({
+                scrollTop: $('#results-container').offset().top - 100
+            }, 500);
+        }
+    });
+</script>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>

@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+
+{% block title %}About - Rotax Pro Jet{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="display-5 fw-bold mb-3">About Rotax Pro Jet</h1>
+                <p class="lead mb-4">We're a team of kart racing enthusiasts and engineers dedicated to helping racers achieve optimal engine performance through precise carburetor jetting.</p>
+            </div>
+            <div class="col-lg-6">
+                <img src="{{ url_for('static', filename='images/about-hero.jpg') }}" alt="Rotax Pro Jet Team" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Story -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="{{ url_for('static', filename='images/our-story.jpg') }}" alt="Our Story" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="display-6 fw-bold mb-3">Our Story</h2>
+                <p class="mb-3">Rotax Pro Jet was born from the frustration of inconsistent engine performance due to changing weather conditions. As kart racers ourselves, we experienced firsthand the challenges of adjusting carburetor jetting to match the environment.</p>
+                <p class="mb-3">After countless hours of research, testing, and collaboration with engine tuners, we developed a mathematical model based on the work of Bowmain Consulting that accurately predicts the optimal jetting for any given atmospheric conditions.</p>
+                <p class="mb-0">What started as a simple spreadsheet for our own team has evolved into a comprehensive web application trusted by kart racers around the world. Our mission is to take the guesswork out of jetting and help racers of all levels achieve consistent, optimal engine performance.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Team -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">Our Team</h2>
+            <p class="lead text-muted">Meet the people behind Rotax Pro Jet</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <img src="{{ url_for('static', filename='images/team-1.jpg') }}" alt="John Smith" class="rounded-circle mb-3" width="150" height="150">
+                        <h3 class="h5 mb-1">John Smith</h3>
+                        <p class="text-muted mb-3">Founder & CEO</p>
+                        <p class="small mb-3">Former national karting champion with 15+ years of racing experience. Mechanical engineer with a passion for optimizing engine performance.</p>
+                        <div class="social-links">
+                            <a href="#" class="text-secondary me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-secondary me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-secondary"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <img src="{{ url_for('static', filename='images/team-2.jpg') }}" alt="Sarah Johnson" class="rounded-circle mb-3" width="150" height="150">
+                        <h3 class="h5 mb-1">Sarah Johnson</h3>
+                        <p class="text-muted mb-3">Lead Developer</p>
+                        <p class="small mb-3">Full-stack developer with expertise in creating intuitive user interfaces and robust backend systems. Weekend kart racer and tech enthusiast.</p>
+                        <div class="social-links">
+                            <a href="#" class="text-secondary me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-secondary me-2"><i class="fab fa-github"></i></a>
+                            <a href="#" class="text-secondary"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <img src="{{ url_for('static', filename='images/team-3.jpg') }}" alt="Michael Chen" class="rounded-circle mb-3" width="150" height="150">
+                        <h3 class="h5 mb-1">Michael Chen</h3>
+                        <p class="text-muted mb-3">Engine Specialist</p>
+                        <p class="small mb-3">Certified Rotax engine technician with over a decade of experience tuning engines for championship-winning teams. Expert in carburetor optimization.</p>
+                        <div class="social-links">
+                            <a href="#" class="text-secondary me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-secondary me-2"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-secondary"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <img src="{{ url_for('static', filename='images/team-4.jpg') }}" alt="Emma Rodriguez" class="rounded-circle mb-3" width="150" height="150">
+                        <h3 class="h5 mb-1">Emma Rodriguez</h3>
+                        <p class="text-muted mb-3">Customer Success</p>
+                        <p class="small mb-3">Former karting team manager with a passion for helping racers achieve their goals. Dedicated to ensuring our users get the most out of Rotax Pro Jet.</p>
+                        <div class="social-links">
+                            <a href="#" class="text-secondary me-2"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-secondary me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-secondary"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Approach -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">Our Approach</h2>
+            <p class="lead text-muted">How we ensure accurate jetting recommendations</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-3">
+                            <i class="fas fa-flask fa-2x"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Scientific Foundation</h3>
+                        <p class="text-muted mb-0">Our calculations are based on the mathematical models from Bowmain Consulting's research on Rotax carburetor jetting, providing a solid scientific foundation for our recommendations.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-3">
+                            <i class="fas fa-vial fa-2x"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Extensive Testing</h3>
+                        <p class="text-muted mb-0">We've validated our algorithms through extensive track testing across different engines, tracks, and weather conditions to ensure reliable and consistent results.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="feature-icon bg-primary bg-gradient text-white mb-3">
+                            <i class="fas fa-sync-alt fa-2x"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Continuous Improvement</h3>
+                        <p class="text-muted mb-0">We're constantly refining our algorithms based on user feedback and new research to provide the most accurate jetting recommendations possible.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">What Racers Say</h2>
+            <p class="lead text-muted">Trusted by kart racers around the world</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ url_for('static', filename='images/testimonial-1.jpg') }}" alt="Michael Johnson" class="rounded-circle me-3" width="60" height="60">
+                                <div>
+                                    <h5 class="mb-0">Michael Johnson</h5>
+                                    <p class="text-muted mb-0">Senior MAX Racer</p>
+                                </div>
+                            </div>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="mb-0">"This app has completely changed how I approach race day preparation. The jetting recommendations are spot-on every time, saving me hours of trial and error."</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ url_for('static', filename='images/testimonial-2.jpg') }}" alt="Sarah Williams" class="rounded-circle me-3" width="60" height="60">
+                                <div>
+                                    <h5 class="mb-0">Sarah Williams</h5>
+                                    <p class="text-muted mb-0">Kart Team Manager</p>
+                                </div>
+                            </div>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="mb-0">"As a team manager, the Team plan has been invaluable. We can share settings across all our drivers and ensure consistent performance across multiple karts."</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ url_for('static', filename='images/testimonial-3.jpg') }}" alt="David Chen" class="rounded-circle me-3" width="60" height="60">
+                                <div>
+                                    <h5 class="mb-0">David Chen</h5>
+                                    <p class="text-muted mb-0">Junior MAX Racer</p>
+                                </div>
+                            </div>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <p class="mb-0">"The automatic weather data feature saves me so much time. I just show up at the track and get perfect jetting recommendations instantly. Game changer!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Partners -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">Our Partners</h2>
+            <p class="lead text-muted">Working together to support the karting community</p>
+        </div>
+        
+        <div class="row align-items-center justify-content-center g-4">
+            <div class="col-6 col-md-3 text-center">
+                <img src="{{ url_for('static', filename='images/partner-1.png') }}" alt="Partner 1" class="img-fluid" style="max-height: 80px;">
+            </div>
+            <div class="col-6 col-md-3 text-center">
+                <img src="{{ url_for('static', filename='images/partner-2.png') }}" alt="Partner 2" class="img-fluid" style="max-height: 80px;">
+            </div>
+            <div class="col-6 col-md-3 text-center">
+                <img src="{{ url_for('static', filename='images/partner-3.png') }}" alt="Partner 3" class="img-fluid" style="max-height: 80px;">
+            </div>
+            <div class="col-6 col-md-3 text-center">
+                <img src="{{ url_for('static', filename='images/partner-4.png') }}" alt="Partner 4" class="img-fluid" style="max-height: 80px;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h2 class="display-5 fw-bold mb-3">Join the Rotax Pro Jet community</h2>
+                <p class="lead mb-0">Experience the difference that precise jetting can make in your kart's performance.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('register') }}" class="btn btn-light btn-lg">Start Free Trial</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .feature-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+    }
+</style>
+{% endblock %}
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
