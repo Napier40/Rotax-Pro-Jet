@@ -21,6 +21,11 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-for-testing')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///rotax_pro_jet.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Context processor to make datetime available in all templates
+@app.context_processor
+def inject_now():
+    return {'now': datetime.utcnow()}
+
 # Initialize database
 db = SQLAlchemy(app)
 
