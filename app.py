@@ -46,28 +46,40 @@ STANDARD_CONDITIONS = {
 # Engine specifications
 ENGINE_SPECS = {
     'Senior MAX EVO': {
-        'default_jet': 130,
-        'jet_range': {'min': 124, 'max': 136},
+        'default_jet': 132,
+        'jet_range': {'min': 124, 'max': 138},
         'needle_options': ['K27', 'K98'],
         'default_needle': 'K98',
         'default_needle_position': 2,
-        'volumetric_efficiency': 0.91
+        'volumetric_efficiency': 0.91,
+        'jet_factor': 1.0  # Base factor for jet calculation
+    },
+    'DD2': {
+        'default_jet': 134,
+        'jet_range': {'min': 126, 'max': 140},
+        'needle_options': ['K27', 'K98'],
+        'default_needle': 'K98',
+        'default_needle_position': 2,
+        'volumetric_efficiency': 0.93,
+        'jet_factor': 1.02  # Slightly richer jetting for DD2
     },
     'Junior MAX EVO': {
-        'default_jet': 130,
-        'jet_range': {'min': 124, 'max': 136},
+        'default_jet': 126,
+        'jet_range': {'min': 120, 'max': 132},
         'needle_options': ['K27', 'K98'],
         'default_needle': 'K98',
         'default_needle_position': 2,
-        'volumetric_efficiency': 0.87
+        'volumetric_efficiency': 0.87,
+        'jet_factor': 0.97  # Slightly leaner jetting for restricted class
     },
     'Mini MAX': {
-        'default_jet': 130,
-        'jet_range': {'min': 124, 'max': 136},
+        'default_jet': 118,
+        'jet_range': {'min': 112, 'max': 124},
         'needle_options': ['K27', 'K98'],
         'default_needle': 'K98',
         'default_needle_position': 2,
-        'volumetric_efficiency': 0.58
+        'volumetric_efficiency': 0.58,
+        'jet_factor': 0.92  # Significantly leaner jetting for Mini MAX
     }
 }
 
@@ -97,6 +109,7 @@ class Setting(db.Model):
     needle_position = db.Column(db.Integer)
     float_height = db.Column(db.Float)
     needle_type = db.Column(db.String(20))
+    tuning_value = db.Column(db.Integer, default=0)  # Added tuning value
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 @login_manager.user_loader
@@ -136,20 +149,28 @@ def calculate_air_density(temperature, pressure, humidity):
     
     return density
 
-def calculate_jet_size(reference_jet, reference_air_density, current_air_density):
+def calculate_jet_size(reference_jet, reference_air_density, current_air_density, engine_type):
     """
-    Calculate the recommended jet size based on air density
+    Calculate the recommended jet size based on air density and engine type
     
     Args:
         reference_jet (int): The jet size known to work at reference conditions
         reference_air_density (float): The air density at reference conditions
         current_air_density (float): The current air density
+        engine_type (str): The type of engine
         
     Returns:
         int: The recommended jet size
     """
+    # Get engine specifications
+    engine_spec = ENGINE_SPECS.get(engine_type, ENGINE_SPECS['Senior MAX EVO'])
+    
+    # Apply engine-specific jet factor
+    jet_factor = engine_spec.get('jet_factor', 1.0)
+    
     # Using the formula from the Bowmain document: j₂ = j₁ × (ρ₂/ρ₁)^(1/4)
-    jet_size = reference_jet * pow(current_air_density / reference_air_density, 0.25)
+    # Modified with engine-specific jet factor
+    jet_size = reference_jet * pow(current_air_density / reference_air_density, 0.25) * jet_factor
     
     # Round to the nearest available jet size (typically in increments of 2)
     return round(jet_size / 2) * 2
@@ -232,7 +253,7 @@ def calculate_jetting(params):
     ref_jet = reference_jet or engine_spec['default_jet']
     
     # Calculate recommended jet size
-    recommended_jet = calculate_jet_size(ref_jet, ref_air_density, current_air_density)
+    recommended_jet = calculate_jet_size(ref_jet, ref_air_density, current_air_density, engine_type)
     
     # Calculate recommended needle position
     recommended_needle_position = calculate_needle_position(
@@ -509,7 +530,8 @@ def api_settings_save():
         main_jet=data.get('results', {}).get('main_jet'),
         needle_position=data.get('results', {}).get('needle_position'),
         float_height=data.get('results', {}).get('float_height'),
-        needle_type=data.get('results', {}).get('needle_type')
+        needle_type=data.get('results', {}).get('needle_type'),
+        tuning_value=data.get('settings', {}).get('tuning_value', 0)  # Added tuning value
     )
     
     db.session.add(new_setting)

@@ -113,7 +113,10 @@
                                                     <div>
                                                         <span class="badge bg-primary me-1">Jet: {{ setting.main_jet }}</span>
                                                         <span class="badge bg-secondary me-1">Needle: {{ setting.needle_position }}</span>
-                                                        <span class="badge bg-info">Float: {{ setting.float_height }}</span>
+                                                        <span class="badge bg-info me-1">Float: {{ setting.float_height }}</span>
+                                                        {% if setting.tuning_value != 0 %}
+                                                        <span class="badge bg-warning">Tuning: {{ setting.tuning_value }}</span>
+                                                        {% endif %}
                                                     </div>
                                                     <div>
                                                         <button class="btn btn-sm btn-outline-primary load-setting" data-id="{{ setting.id }}">Load</button>
@@ -249,6 +252,39 @@
                 </div>
                 
                 <div class="mt-4">
+                    <h4>Fine Tuning</h4>
+                    <div class="card bg-light border-0 p-3 mb-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <label for="tuning-slider" class="form-label mb-0">Engine Tuning Adjustment:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="range" class="form-range" id="tuning-slider" min="-3" max="3" step="1" value="0">
+                                <div class="d-flex justify-content-between small text-muted">
+                                    <span>Leaner (-3)</span>
+                                    <span>-2</span>
+                                    <span>-1</span>
+                                    <span>Standard</span>
+                                    <span>+1</span>
+                                    <span>+2</span>
+                                    <span>Richer (+3)</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2">Current Value:</span>
+                                    <span id="tuning-value" class="badge bg-primary">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p class="small text-muted mb-0">
+                                <i class="fas fa-info-circle me-1"></i> Adjust this slider to fine-tune your jetting based on your specific engine characteristics. 
+                                Each step corresponds to approximately one needle clip position or 2-3 jet sizes.
+                            </p>
+                        </div>
+                    </div>
+                    
                     <h4>Calculation Details</h4>
                     <div class="table-responsive">
                         <table class="table table-sm">
@@ -558,7 +594,8 @@
                 humidity: parseFloat($('#humidity').val()),
                 altitude: parseFloat($('#altitude').val()),
                 engine_type: $('#engine-type').val(),
-                reference_jet: $('#reference-jet').val() ? parseInt($('#reference-jet').val()) : null
+                reference_jet: $('#reference-jet').val() ? parseInt($('#reference-jet').val()) : null,
+                tuning_value: parseInt($('#tuning-slider').val())  // Added tuning value
             };
             
             // Get results
@@ -657,6 +694,60 @@
             });
         });
         
+        // Tuning slider functionality
+        $('#tuning-slider').on('input', function() {
+            const value = $(this).val();
+            $('#tuning-value').text(value);
+            
+            // If results are already displayed, update them based on the tuning value
+            if ($('#results-container').is(':visible')) {
+                updateResultsWithTuning(value);
+            }
+        });
+        
+        function updateResultsWithTuning(tuningValue) {
+            // Get the original calculated values
+            const originalJet = parseInt($('#result-main-jet').data('original') || $('#result-main-jet').text());
+            const originalNeedlePosition = parseInt($('#result-needle-position').data('original') || $('#result-needle-position').text());
+            
+            // Calculate adjusted values
+            // Each tuning step is worth about 2-3 jet sizes
+            const jetAdjustment = parseInt(tuningValue) * 2;
+            const adjustedJet = originalJet + jetAdjustment;
+            
+            // For needle position, positive tuning value means richer mixture (lower position)
+            // and negative tuning value means leaner mixture (higher position)
+            let adjustedNeedlePosition = originalNeedlePosition - parseInt(tuningValue) / 2;
+            
+            // Ensure needle position is within valid range (1-5)
+            adjustedNeedlePosition = Math.max(1, Math.min(5, Math.round(adjustedNeedlePosition)));
+            
+            // Update the displayed values
+            $('#result-main-jet').text(adjustedJet);
+            $('#result-needle-position').text(adjustedNeedlePosition);
+            
+            // Add a note about the adjustment if tuning is not 0
+            if (tuningValue != 0) {
+                if (!$('#tuning-note').length) {
+                    $('#results-container .card-body').prepend(
+                        `<div id="tuning-note" class="alert alert-info mb-4">
+                            <i class="fas fa-info-circle me-2"></i>
+                            These results include your custom tuning adjustment of <strong>${tuningValue}</strong>.
+                            The base calculated jet size was <strong>${originalJet}</strong> with needle position <strong>${originalNeedlePosition}</strong>.
+                        </div>`
+                    );
+                } else {
+                    $('#tuning-note').html(
+                        `<i class="fas fa-info-circle me-2"></i>
+                        These results include your custom tuning adjustment of <strong>${tuningValue}</strong>.
+                        The base calculated jet size was <strong>${originalJet}</strong> with needle position <strong>${originalNeedlePosition}</strong>.`
+                    );
+                }
+            } else {
+                $('#tuning-note').remove();
+            }
+        }
+        
         // Helper functions
         function fetchWeatherData(latitude, longitude) {
             return new Promise((resolve, reject) => {
@@ -734,11 +825,23 @@
         }
         
         function displayResults(result) {
-            // Update result values
-            $('#result-main-jet').text(result.recommendations.main_jet);
-            $('#result-needle-position').text(result.recommendations.needle_position);
+            // Store and update result values
+            const mainJet = result.recommendations.main_jet;
+            const needlePosition = result.recommendations.needle_position;
+            
+            // Store original values as data attributes and display them
+            $('#result-main-jet')
+                .data('original', mainJet)
+                .text(mainJet);
+            $('#result-needle-position')
+                .data('original', needlePosition)
+                .text(needlePosition);
             $('#result-float-height').text(result.recommendations.float_height.toFixed(1));
             $('#result-needle-type').text(result.recommendations.needle_type);
+            
+            // Reset tuning slider to 0
+            $('#tuning-slider').val(0);
+            $('#tuning-value').text(0);
             
             // Update calculation details
             $('#result-current-density').text(`${result.calculations.current_air_density.toFixed(3)} kg/m³`);
