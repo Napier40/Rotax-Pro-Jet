@@ -52,7 +52,23 @@ ENGINE_SPECS = {
         'default_needle': 'K98',
         'default_needle_position': 2,
         'volumetric_efficiency': 0.91,
-        'jet_factor': 1.0  # Base factor for jet calculation
+        'jet_factor': 1.0,  # Base factor for jet calculation
+        'needle_specs': {
+            'K98': {
+                'default_position': 2,
+                'position_range': {'min': 1, 'max': 5},
+                'jet_adjustment': 0  # No adjustment needed for default needle
+            },
+            'K27': {
+                'default_position': 3,
+                'position_range': {'min': 1, 'max': 5},
+                'jet_adjustment': -2  # K27 typically runs 2 sizes leaner
+            }
+        },
+        'idle_jet_options': {
+            'Standard': 35,
+            'High Altitude': 32
+        }
     },
     'DD2': {
         'default_jet': 134,
@@ -61,7 +77,23 @@ ENGINE_SPECS = {
         'default_needle': 'K98',
         'default_needle_position': 2,
         'volumetric_efficiency': 0.93,
-        'jet_factor': 1.02  # Slightly richer jetting for DD2
+        'jet_factor': 1.02,  # Slightly richer jetting for DD2
+        'needle_specs': {
+            'K98': {
+                'default_position': 2,
+                'position_range': {'min': 1, 'max': 5},
+                'jet_adjustment': 0
+            },
+            'K27': {
+                'default_position': 3,
+                'position_range': {'min': 1, 'max': 5},
+                'jet_adjustment': -2
+            }
+        },
+        'idle_jet_options': {
+            'Standard': 35,
+            'High Altitude': 32
+        }
     },
     'Junior MAX EVO': {
         'default_jet': 126,
@@ -70,7 +102,23 @@ ENGINE_SPECS = {
         'default_needle': 'K98',
         'default_needle_position': 2,
         'volumetric_efficiency': 0.87,
-        'jet_factor': 0.97  # Slightly leaner jetting for restricted class
+        'jet_factor': 0.97,  # Slightly leaner jetting for restricted class
+        'needle_specs': {
+            'K98': {
+                'default_position': 2,
+                'position_range': {'min': 1, 'max': 5},
+                'jet_adjustment': 0
+            },
+            'K27': {
+                'default_position': 3,
+                'position_range': {'min': 1, 'max': 5},
+                'jet_adjustment': -2
+            }
+        },
+        'idle_jet_options': {
+            'Standard': 35,
+            'High Altitude': 32
+        }
     },
     'Mini MAX': {
         'default_jet': 118,
@@ -79,7 +127,23 @@ ENGINE_SPECS = {
         'default_needle': 'K98',
         'default_needle_position': 2,
         'volumetric_efficiency': 0.58,
-        'jet_factor': 0.92  # Significantly leaner jetting for Mini MAX
+        'jet_factor': 0.92,  # Significantly leaner jetting for Mini MAX
+        'needle_specs': {
+            'K98': {
+                'default_position': 2,
+                'position_range': {'min': 1, 'max': 5},
+                'jet_adjustment': 0
+            },
+            'K27': {
+                'default_position': 3,
+                'position_range': {'min': 1, 'max': 5},
+                'jet_adjustment': -2
+            }
+        },
+        'idle_jet_options': {
+            'Standard': 30,
+            'High Altitude': 28
+        }
     }
 }
 
@@ -109,6 +173,8 @@ class Setting(db.Model):
     needle_position = db.Column(db.Integer)
     float_height = db.Column(db.Float)
     needle_type = db.Column(db.String(20))
+    idle_jet_setting = db.Column(db.String(20), default='Standard')  # Added idle jet setting
+    idle_jet_size = db.Column(db.Integer)  # Added idle jet size
     tuning_value = db.Column(db.Integer, default=0)  # Added tuning value
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -234,6 +300,8 @@ def calculate_jetting(params):
     engine_type = params.get('engine_type')
     reference_jet = params.get('reference_jet')
     reference_conditions = params.get('reference_conditions')
+    needle_type = params.get('needle_type', 'K98')  # Default to K98 if not specified
+    idle_jet_setting = params.get('idle_jet_setting', 'Standard')  # Default to Standard if not specified
     
     # Get engine specifications
     engine_spec = ENGINE_SPECS.get(engine_type, ENGINE_SPECS['Senior MAX EVO'])
@@ -252,18 +320,34 @@ def calculate_jetting(params):
     # Use provided reference jet or default from engine spec
     ref_jet = reference_jet or engine_spec['default_jet']
     
-    # Calculate recommended jet size
-    recommended_jet = calculate_jet_size(ref_jet, ref_air_density, current_air_density, engine_type)
+    # Get needle specifications
+    needle_specs = engine_spec.get('needle_specs', {}).get(needle_type, {})
     
-    # Calculate recommended needle position
+    # Apply needle-specific adjustments
+    needle_jet_adjustment = needle_specs.get('jet_adjustment', 0)
+    
+    # Calculate recommended jet size with needle adjustment
+    recommended_jet = calculate_jet_size(ref_jet, ref_air_density, current_air_density, engine_type)
+    recommended_jet += needle_jet_adjustment  # Apply needle-specific adjustment
+    
+    # Calculate recommended needle position based on needle type
+    default_needle_position = needle_specs.get('default_position', engine_spec['default_needle_position'])
     recommended_needle_position = calculate_needle_position(
-        engine_spec['default_needle_position'],
+        default_needle_position,
         ref_air_density,
         current_air_density
     )
     
     # Calculate recommended float height (assuming 15mm as reference)
     recommended_float_height = calculate_float_height(15, ref_air_density, current_air_density)
+    
+    # Determine recommended idle jet size based on setting and altitude
+    idle_jet_size = engine_spec.get('idle_jet_options', {}).get(idle_jet_setting, 35)
+    
+    # Adjust idle jet size based on altitude if needed
+    if altitude > 1000 and idle_jet_setting == 'Standard':
+        # Suggest high altitude jet for elevations above 1000m
+        idle_jet_size = engine_spec.get('idle_jet_options', {}).get('High Altitude', idle_jet_size - 3)
     
     # Determine if conditions are near dew point
     is_near_dew_point = humidity > 90 and temperature < 10
@@ -275,7 +359,9 @@ def calculate_jetting(params):
             'pressure': pressure,
             'humidity': humidity,
             'altitude': altitude,
-            'engine_type': engine_type
+            'engine_type': engine_type,
+            'needle_type': needle_type,
+            'idle_jet_setting': idle_jet_setting
         },
         'calculations': {
             'current_air_density': current_air_density,
@@ -286,7 +372,9 @@ def calculate_jetting(params):
             'main_jet': recommended_jet,
             'needle_position': recommended_needle_position,
             'float_height': recommended_float_height,
-            'needle_type': engine_spec['default_needle']
+            'needle_type': needle_type,
+            'idle_jet_size': idle_jet_size,
+            'idle_jet_setting': idle_jet_setting
         },
         'warnings': []
     }
@@ -530,8 +618,10 @@ def api_settings_save():
         main_jet=data.get('results', {}).get('main_jet'),
         needle_position=data.get('results', {}).get('needle_position'),
         float_height=data.get('results', {}).get('float_height'),
-        needle_type=data.get('results', {}).get('needle_type'),
-        tuning_value=data.get('settings', {}).get('tuning_value', 0)  # Added tuning value
+        needle_type=data.get('settings', {}).get('needle_type', 'K98'),
+        idle_jet_setting=data.get('settings', {}).get('idle_jet_setting', 'Standard'),
+        idle_jet_size=data.get('results', {}).get('idle_jet_size'),
+        tuning_value=data.get('settings', {}).get('tuning_value', 0)
     )
     
     db.session.add(new_setting)

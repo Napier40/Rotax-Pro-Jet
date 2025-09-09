@@ -112,8 +112,9 @@
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div>
                                                         <span class="badge bg-primary me-1">Jet: {{ setting.main_jet }}</span>
-                                                        <span class="badge bg-secondary me-1">Needle: {{ setting.needle_position }}</span>
+                                                        <span class="badge bg-secondary me-1">{{ setting.needle_type }} Pos: {{ setting.needle_position }}</span>
                                                         <span class="badge bg-info me-1">Float: {{ setting.float_height }}</span>
+                                                        <span class="badge bg-success me-1">Idle: {{ setting.idle_jet_size }}</span>
                                                         {% if setting.tuning_value != 0 %}
                                                         <span class="badge bg-warning">Tuning: {{ setting.tuning_value }}</span>
                                                         {% endif %}
@@ -160,6 +161,24 @@
                         <div class="col-md-6">
                             <label for="reference-jet" class="form-label">Reference Jet Size:</label>
                             <input type="number" class="form-control" id="reference-jet" placeholder="e.g., 130">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="needle-type" class="form-label">Needle Type:</label>
+                            <div class="btn-group w-100" role="group" aria-label="Needle Type">
+                                <input type="radio" class="btn-check" name="needle-type" id="needle-k98" value="K98" checked>
+                                <label class="btn btn-outline-primary" for="needle-k98">K98 (Standard)</label>
+                                <input type="radio" class="btn-check" name="needle-type" id="needle-k27" value="K27">
+                                <label class="btn btn-outline-primary" for="needle-k27">K27 (Alternative)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="idle-jet-setting" class="form-label">Idle/Slow Jet Setting:</label>
+                            <div class="btn-group w-100" role="group" aria-label="Idle Jet Setting">
+                                <input type="radio" class="btn-check" name="idle-jet-setting" id="idle-standard" value="Standard" checked>
+                                <label class="btn btn-outline-primary" for="idle-standard">Standard</label>
+                                <input type="radio" class="btn-check" name="idle-jet-setting" id="idle-high-altitude" value="High Altitude">
+                                <label class="btn btn-outline-primary" for="idle-high-altitude">High Altitude</label>
+                            </div>
                         </div>
                     </div>
                     
@@ -215,7 +234,7 @@
                 </div>
                 
                 <div class="row g-4">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="card h-100 bg-light border-0">
                             <div class="card-body text-center p-4">
                                 <h4 class="text-primary mb-2">Main Jet</h4>
@@ -223,7 +242,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="card h-100 bg-light border-0">
                             <div class="card-body text-center p-4">
                                 <h4 class="text-primary mb-2">Needle Position</h4>
@@ -232,7 +251,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="card h-100 bg-light border-0">
                             <div class="card-body text-center p-4">
                                 <h4 class="text-primary mb-2">Float Height</h4>
@@ -241,11 +260,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="card h-100 bg-light border-0">
                             <div class="card-body text-center p-4">
                                 <h4 class="text-primary mb-2">Needle Type</h4>
                                 <div class="display-4 fw-bold mb-0" id="result-needle-type"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 bg-light border-0">
+                            <div class="card-body text-center p-4">
+                                <h4 class="text-primary mb-2">Idle/Slow Jet</h4>
+                                <div class="display-4 fw-bold mb-0" id="result-idle-jet-size"></div>
+                                <div class="text-muted" id="result-idle-jet-setting"></div>
                             </div>
                         </div>
                     </div>
@@ -366,6 +394,21 @@
                 $('#reference-conditions-inputs').slideDown();
             } else {
                 $('#reference-conditions-inputs').slideUp();
+            }
+        });
+        
+        // Handle engine type change to update needle and idle jet options
+        $('#engine-type').change(function() {
+            const engineType = $(this).val();
+            
+            // In a real implementation, we would fetch the engine specs from the server
+            // For now, we'll just reset to defaults
+            $('#needle-k98').prop('checked', true);
+            $('#idle-standard').prop('checked', true);
+            
+            // If this is a Mini MAX, suggest the high altitude idle jet by default
+            if (engineType === 'Mini MAX') {
+                $('#idle-high-altitude').prop('checked', true);
             }
         });
         
@@ -519,6 +562,10 @@
                 };
             }
             
+            // Get needle type and idle jet setting
+            const needleType = $('input[name="needle-type"]:checked').val();
+            const idleJetSetting = $('input[name="idle-jet-setting"]:checked').val();
+            
             // Prepare data for API request
             const data = {
                 temperature,
@@ -527,7 +574,9 @@
                 altitude,
                 engine_type: engineType,
                 reference_jet: referenceJet,
-                reference_conditions: referenceConditions
+                reference_conditions: referenceConditions,
+                needle_type: needleType,
+                idle_jet_setting: idleJetSetting
             };
             
             // Show loading indicator
@@ -595,7 +644,9 @@
                 altitude: parseFloat($('#altitude').val()),
                 engine_type: $('#engine-type').val(),
                 reference_jet: $('#reference-jet').val() ? parseInt($('#reference-jet').val()) : null,
-                tuning_value: parseInt($('#tuning-slider').val())  // Added tuning value
+                needle_type: $('input[name="needle-type"]:checked').val(),
+                idle_jet_setting: $('input[name="idle-jet-setting"]:checked').val(),
+                tuning_value: parseInt($('#tuning-slider').val())
             };
             
             // Get results
@@ -838,6 +889,8 @@
                 .text(needlePosition);
             $('#result-float-height').text(result.recommendations.float_height.toFixed(1));
             $('#result-needle-type').text(result.recommendations.needle_type);
+            $('#result-idle-jet-size').text(result.recommendations.idle_jet_size);
+            $('#result-idle-jet-setting').text(result.recommendations.idle_jet_setting);
             
             // Reset tuning slider to 0
             $('#tuning-slider').val(0);
